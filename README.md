@@ -8,6 +8,12 @@
 
 # Prótipo de baixa fidelidade
 
-<img src="/media/BaixaFidelidade.png" alt="ProtoripoBaixaFidelidade"/>
+<img src="/media/BaixaFidelidade.png" alt="Protoripo de Baixa Fidelidade"/>
 
+# Prótipo de alta fidelidade
 
+<img src="/media/AltaFidelidade.png" alt="Protoripo de Alta Fidelidade"/>
+
+# Fluxo da interface de usuário
+
+<img src="/media/UI-Flows.png" alt="UI/User Flows"/>

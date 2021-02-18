@@ -17,3 +17,7 @@
 # Fluxo da interface de usuário
 
 <img src="/media/UI-Flows.png" alt="UI/User Flows"/>
+
+# Paleta de cores
+
+<img src="/media/colors.png" alt="Cores"/>

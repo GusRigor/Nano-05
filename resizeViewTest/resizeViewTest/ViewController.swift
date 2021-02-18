@@ -14,18 +14,16 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageView.image = UIImage(named: "lua.png")
+//        imageView.tintColor = .blue
         // Do any additional setup after loading the view.
         //imageView.transform = CGAffineTransform(scaleX: 5, y: 5)
         
     }
     
     @IBAction func reorganizar(_ sender: Any) {
-        //        UIView.animate(withDuration: 1.5, animations: {
-        //            self.imageView.transform = CGAffineTransform(scaleX: 10, y: 10)
-        //            //self.imageView.transform = CGAffineTransform(rotationAngle: 3.14)
-        //            //self.imageView.transform = CGAffineTransform(translationX: 25, y: 25)
-        //
-        //        })
+        
+        self.perform(#selector(changeImageColorToYellow), with: nil, afterDelay: 2.5)
         
         for _ in 0 ... 10{
             UIView.animate(withDuration: 0.5, animations: {
@@ -33,13 +31,9 @@ class ViewController: UIViewController {
                 
                 UIView.animate(withDuration: 1.5, animations: {
                     self.imageView.transform = CGAffineTransform(scaleX: -1, y: -1)
-                    //self.imageView.transform = CGAffineTransform(rotationAngle: 3.14)
-                    //self.imageView.transform = CGAffineTransform(translationX: 25, y: 25)
+                    
                     UIView.animate(withDuration: 1.5, animations: {
                         self.imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                        //self.imageView.transform = CGAffineTransform(rotationAngle: 3.14)
-                        //self.imageView.transform = CGAffineTransform(translationX: 25, y: 25)
-                        
                     })
                     
                 })
@@ -47,15 +41,14 @@ class ViewController: UIViewController {
             
             
         }
-       
-        
-        
-        //imageView.transform = CGAffineTransform(scaleX: 5, y: 5)
-        //
-        //imageView.transform = CGAffineTransform.identity
         
         Label.text = "Feito"
     }
+    @objc func changeImageColorToYellow (){
+         let templateImage = imageView.image?.withRenderingMode(.alwaysTemplate)
+            imageView.image = templateImage
+            imageView.tintColor = UIColor.yellow
+        }
     
 }
 

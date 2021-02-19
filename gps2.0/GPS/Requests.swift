@@ -8,10 +8,7 @@
 import Foundation
 
 //Air Pollution
-struct Coord: Decodable{
-    var lon: Float
-    var lat: Float
-}
+
 
 struct MainAir: Decodable{
     var aqi: Int
@@ -40,8 +37,8 @@ struct AirQuality: Decodable{
 }
 
 class PollutionAPI{
-    class func pesquisarQualidadeAr(_ lat: Float,_ lon: Float , completion: @escaping (AirQuality) -> Void) {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/air_pollution?lat=\(lat)&lon=\(lon)&appid=63553d4c256b435406eb207df8920fe0") else { return }
+    class func pesquisarQualidadeAr(_ lat: Float,_ lon: Float , completion: @escaping (tempAtual) -> Void) {
+        guard let url = URL(string:"https://fcc-weather-api.glitch.me/api/current?lat=\(lat)&lon=\(lon)") else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error == nil {
                 guard let response = response as? HTTPURLResponse else { return }
@@ -49,7 +46,7 @@ class PollutionAPI{
                     
                     guard let data = data else { return }
                     do {
-                        let airQuality = try JSONDecoder().decode(AirQuality.self, from: data)
+                        let airQuality = try JSONDecoder().decode(tempAtual.self, from: data)
                         completion(airQuality)
                     } catch {
                         print(error.localizedDescription)

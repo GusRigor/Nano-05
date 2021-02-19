@@ -54,18 +54,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         PollutionAPI.pesquisarQualidadeAr(lat,lon) { (air) in
             DispatchQueue.main.sync {
                 print(air.coord.lat)
-                print(air.list.first!.main.aqi)
-                print(air.list.first!.components.co)
-                print(air.list.first!.dt)
-                self.Label.text = "\(air.list.first!.main.aqi)"
-                self.CO.text = "C0: \(air.list.first!.components.co)"
-                self.NO.text = "C0: \(air.list.first!.components.no)"
-                self.NH3.text = "C0: \(air.list.first!.components.nh3)"
-                self.NO2.text = "C0: \(air.list.first!.components.no2)"
-                self.O3.text = "C0: \(air.list.first!.components.o3)"
-                self.PM10.text = "C0: \(air.list.first!.components.pm10)"
-                self.PM2.text = "C0: \(air.list.first!.components.pm2_5)"
-                self.SO2.text = "C0: \(air.list.first!.components.so2)"
+                print(air.coord.lon)
+                self.CO.text = "\(air.weather.first?.main ?? "Deu ruim")"
+//                print(air.list.first!.main.aqi)
+//                print(air.list.first!.components.co)
+//                print(air.list.first!.dt)
+//                self.Label.text = "\(air.list.first!.main.aqi)"
+//                self.CO.text = "C0: \(air.list.first!.components.co)"
+//                self.NO.text = "C0: \(air.list.first!.components.no)"
+//                self.NH3.text = "C0: \(air.list.first!.components.nh3)"
+//                self.NO2.text = "C0: \(air.list.first!.components.no2)"
+//                self.O3.text = "C0: \(air.list.first!.components.o3)"
+//                self.PM10.text = "C0: \(air.list.first!.components.pm10)"
+//                self.PM2.text = "C0: \(air.list.first!.components.pm2_5)"
+//                self.SO2.text = "C0: \(air.list.first!.components.so2)"
                 
             }
         }

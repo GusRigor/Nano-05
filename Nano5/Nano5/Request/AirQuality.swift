@@ -3,7 +3,7 @@
 //  Nano5
 //
 //  Created by Gustavo Rigor on 22/02/21.
-//Testado
+//Testado e Funcionando.
 
 import Foundation
 

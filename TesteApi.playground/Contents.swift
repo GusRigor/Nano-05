@@ -1,8 +1,8 @@
 import Foundation
 
-struct Coord: Decodable{
-    var lon: Float
-    var lat: Float
+struct AirQuality: Decodable{
+    var coord: Coord
+    var list: [node]
 }
 
 struct MainAir: Decodable{
@@ -26,10 +26,63 @@ struct node: Decodable{
     var dt: Int
 }
 
-struct AirQuality: Decodable{
+
+struct WeatherFcc: Decodable{
     var coord: Coord
-    var list: [node]
+    var weather: [Weather]
+    var base: String
+    var main: MainTemp
+    var visibility: Int
+    var wind: Wind
+    var clouds: Clouds
+    var dt: Int
+    var sys: Sys
+    var timezone: Int
+    var id: Int
+    var name: String
+    var cod: Int
 }
+
+struct Coord : Decodable{
+    var lon: Float
+    var lat: Float
+}
+
+struct Weather : Decodable{
+    var id: Int
+    var main: String
+    var description: String
+    var icon: String?
+}
+
+struct MainTemp : Decodable {
+    var temp: Float
+    var feels_like: Float?
+    var temp_min: Float
+    var temp_max: Float
+    var pressure: Float
+    var humidity: Float
+    
+}
+
+struct Wind : Decodable {
+    var speed: Float
+    var deg: Int
+}
+
+struct Clouds: Decodable {
+    var all: Int
+}
+
+struct Sys: Decodable {
+    var type: Int
+    var id: Int
+    var country: String
+    var sunrise: Int
+    var sunset: Int
+}
+
+
 
 
 func pesquisarQualidadeAr(_ lat: Float,_ lon: Float , completion: @escaping (AirQuality) -> Void) {
@@ -58,20 +111,11 @@ func pesquisarQualidadeAr(_ lat: Float,_ lon: Float , completion: @escaping (Air
 
 var str = "Hello, API"
 print(str)
-var i = 0
-for i in 0...600{
-    pesquisarQualidadeAr(-46.6361+Float(i),-23.5475) { (air) in
-        print(air.coord.lat, i)
-//        print(air.list.first!.main.aqi)
-//        print(air.list.first!.components)
-//        print(air.list.first!.dt)
-    }
-print(i)
-}
 
-pesquisarQualidadeAr(-46.6361,-23.5475) { (air) in
+pesquisarQualidadeAr(37.7858,-122.4064) { (air) in
     print(air.coord.lat)
     print(air.list.first!.main.aqi)
     print(air.list.first!.components)
     print(air.list.first!.dt)
 }
+//print("Bla")

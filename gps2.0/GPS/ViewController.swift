@@ -53,9 +53,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func Pesquisar(_ sender: Any) {
         PollutionAPI.pesquisarQualidadeAr(lat,lon) { (air) in
             DispatchQueue.main.sync {
-                print(air.coord.lat)
+//                print(air.coord.lat)
                 print(air.coord.lon)
-                self.CO.text = "\(air.weather.first?.main ?? "Deu ruim")"
+                self.CO.text = "\(air.main.temp)"
 //                print(air.list.first!.main.aqi)
 //                print(air.list.first!.components.co)
 //                print(air.list.first!.dt)

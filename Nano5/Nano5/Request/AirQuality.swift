@@ -8,27 +8,27 @@
 import Foundation
 
 struct AirQuality: Decodable{
-    var coord: Coord
-    var list: [node]
+    var coord: Coord?
+    var list: [node?]?
 }
 
 struct MainAir: Decodable{
-    var aqi: Int
+    var aqi: Int?
 }
 
 struct Components: Decodable{
-    var co: Float
-    var no: Float
-    var no2: Float
-    var o3: Float
-    var so2: Float
-    var pm2_5: Float
-    var pm10: Float
-    var nh3: Float
+    var co: Float?
+    var no: Float?
+    var no2: Float?
+    var o3: Float?
+    var so2: Float?
+    var pm2_5: Float?
+    var pm10: Float?
+    var nh3: Float?
 }
 
 struct node: Decodable{
-    var main: MainAir
-    var components: Components
-    var dt: Int
+    var main: MainAir?
+    var components: Components?
+    var dt: Int?
 }

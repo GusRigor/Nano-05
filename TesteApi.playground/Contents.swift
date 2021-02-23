@@ -82,11 +82,74 @@ struct Sys: Decodable {
     var sunset: Int
 }
 
+struct WeatherForecast: Decodable {
+    var lat: Float
+    var lon: Float
+    var timezone: String
+    var timezone_offset: Int
+    var current: Current
+    var daily: [Daily]
+}
+
+struct Current: Decodable {
+    var dt: Int
+    var sunrise: Int
+    var sunset: Int
+    var temp: Float
+    var feels_like: Float
+    var presssure: Int
+    var humidity: Int
+    var dew_point: Float
+    var uvi: Float
+    var clouds: Int
+    var visibility: Int
+    var wind_speed: Float
+    var wind_deg: Int
+    var weather: [Weather]
+}
+
+struct Daily: Decodable {
+    var dt: Int
+    var sunrise: Int
+    var sunset: Int
+    var temp: TempDay
+    var feels_like: Feels_like
+    var pressure: Int
+    var humidity: Int
+    var dew_point: Float
+    var wind_speed: Float
+    var wind_deg: Int
+    var weather: [Weather]
+    var clouds: Int
+    var pop: Float
+    var rain: Float
+    var uvi: Float
+}
+
+struct TempDay: Decodable {
+    var day: Float
+    var min: Float
+    var max: Float
+    var night: Float
+    var eve: Float
+    var morn: Float
+}
+
+struct Feels_like: Decodable {
+    var day: Float
+    var night: Float
+    var eve: Float
+    var morn: Float
+}
 
 
 
-func pesquisarQualidadeAr(_ lat: Float,_ lon: Float , completion: @escaping (WeatherFcc) -> Void) {
-    guard let url = URL(string: "https://fcc-weather-api.glitch.me/api/current?lat=\(lat)&lon=\(lon)") else { return }
+
+
+
+
+func pesquisarQualidadeAr(_ lat: Float,_ lon: Float , completion: @escaping (WeatherForecast) -> Void) {
+    guard let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&&exclude=minutely,hourly,alerts&appid=369991904c212bf42c5744c560d15b9c") else { return }
     URLSession.shared.dataTask(with: url) { (data, response, error) in
         if error == nil {
             guard let response = response as? HTTPURLResponse else { return }
@@ -94,7 +157,7 @@ func pesquisarQualidadeAr(_ lat: Float,_ lon: Float , completion: @escaping (Wea
                 
                 guard let data = data else { return }
                 do {
-                    let airQuality = try JSONDecoder().decode(WeatherFcc.self, from: data)
+                    let airQuality = try JSONDecoder().decode(WeatherForecast.self, from: data)
                     completion(airQuality)
                 } catch {
                     print(error.localizedDescription)
@@ -113,8 +176,9 @@ var str = "Hello, API"
 print(str)
 
 pesquisarQualidadeAr(37.7858,-122.4064) { (air) in
-    print(air.coord.lat)
-    print(air.main.temp)
+    print(air.lat)
+    print(air.current)
+    print(air.daily)
 //    print(air.list.first!.main.aqi)
 //    print(air.list.first!.components)
 //    print(air.list.first!.dt)

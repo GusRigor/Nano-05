@@ -54,8 +54,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         PollutionAPI.pesquisarQualidadeAr(lat,lon) { (air) in
             DispatchQueue.main.sync {
 //                print(air.coord.lat)
-                print(air.coord.lon)
-                self.CO.text = "\(air.main.temp)"
+                print(air.lon!)
+                self.CO.text = "\(air.current?.temp ?? 0)"
 //                print(air.list.first!.main.aqi)
 //                print(air.list.first!.components.co)
 //                print(air.list.first!.dt)

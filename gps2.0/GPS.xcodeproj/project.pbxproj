@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1C12D9DF25E051F700061E98 /* Tempo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C12D9DE25E051F700061E98 /* Tempo.swift */; };
+		1C6319F525E5742200667EB9 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6319F425E5742200667EB9 /* Forecast.swift */; };
 		D380B39025D0D40400EC0518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D380B38F25D0D40400EC0518 /* AppDelegate.swift */; };
 		D380B39225D0D40400EC0518 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D380B39125D0D40400EC0518 /* SceneDelegate.swift */; };
 		D380B39425D0D40400EC0518 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D380B39325D0D40400EC0518 /* ViewController.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		1C12D9DE25E051F700061E98 /* Tempo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo.swift; sourceTree = "<group>"; };
+		1C6319F425E5742200667EB9 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		D380B38C25D0D40400EC0518 /* GPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D380B38F25D0D40400EC0518 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D380B39125D0D40400EC0518 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			children = (
 				D3867FCE25D31776003B2243 /* Requests.swift */,
 				1C12D9DE25E051F700061E98 /* Tempo.swift */,
+				1C6319F425E5742200667EB9 /* Forecast.swift */,
 				D380B38F25D0D40400EC0518 /* AppDelegate.swift */,
 				D380B39125D0D40400EC0518 /* SceneDelegate.swift */,
 				D380B39325D0D40400EC0518 /* ViewController.swift */,
@@ -268,6 +271,7 @@
 				D3867FCF25D31776003B2243 /* Requests.swift in Sources */,
 				D380B39025D0D40400EC0518 /* AppDelegate.swift in Sources */,
 				D380B39225D0D40400EC0518 /* SceneDelegate.swift in Sources */,
+				1C6319F525E5742200667EB9 /* Forecast.swift in Sources */,
 				1C12D9DF25E051F700061E98 /* Tempo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

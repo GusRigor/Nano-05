@@ -115,7 +115,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Local" id="NPy-18-c8S"/>
+                    <navigationItem key="navigationItem" title="Local" id="NPy-18-c8S">
+                        <barButtonItem key="rightBarButtonItem" title="°C / °F" id="Led-9V-sVd"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -216,7 +218,9 @@
                             <constraint firstItem="kkS-PJ-ZX1" firstAttribute="leading" secondItem="K8N-4W-6RN" secondAttribute="leading" id="nd6-sS-CQ5"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Detalhes" id="CSV-6o-u9b"/>
+                    <navigationItem key="navigationItem" title="Detalhes" id="CSV-6o-u9b">
+                        <barButtonItem key="rightBarButtonItem" title="°C / °F" id="fkV-aw-dDC"/>
+                    </navigationItem>
                     <size key="freeformSize" width="414" height="1200"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lsu-k9-Bli" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

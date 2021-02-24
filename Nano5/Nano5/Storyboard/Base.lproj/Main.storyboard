@@ -17,9 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="dAh-GQ-tD3">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CidadesCelula" rowHeight="100" id="dWN-e7-foS" customClass="CidadeTableViewCell" customModule="Nano5" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="72" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dWN-e7-foS" id="jqb-w4-nwl">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
@@ -67,6 +72,7 @@
                     <navigationItem key="navigationItem" id="Fqv-Sf-soC"/>
                     <connections>
                         <outlet property="CidadesTable" destination="HVQ-1U-m8Y" id="HvI-ap-wQd"/>
+                        <outlet property="PesquisarCidade" destination="dAh-GQ-tD3" id="RkO-mH-b4s"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="segueCidade" id="hMM-1W-yvX"/>
                     </connections>
                 </tableViewController>
@@ -361,17 +367,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="fjW-fP-ytv"/>
+                        <segue destination="b5D-mD-ozC" kind="relationship" relationship="rootViewController" id="KAv-TB-rCo"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6R7-io-Kyc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="490" y="124"/>
+            <point key="canvasLocation" x="-1249" y="852"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="fjW-fP-ytv"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="sun.min" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">

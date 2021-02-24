@@ -26,6 +26,26 @@ class ClimaAtualViewController: UIViewController {
     var tempMin: Float = 0
     var tempMax: Float = 0
     
+    var iconesD = [ 2: "11d:", 3: "09d", 6: "13d", 7: "50d", 50: "10d", 51: "13d", 52: "09d", 53: "09d", 800: "01d", 801: "02d", 802: "03d", 803: "04d", 804: "04d"]
+    
+    var iconesN = [ 2: "11n:", 3: "09n", 6: "13n", 7: "50n", 50: "10n", 51: "13n", 52: "09n", 53: "09n", 800: "01n", 801: "02n", 802: "03n", 803: "04n", 804: "04n"]
+    
+    /*
+    Códigos:
+     200 - 232 = 11d*
+     300 - 321 = 09d*
+     500 - 504 = 10d*
+     511       = 13d*
+     520 - 531 = 09d*
+     600 - 622 = 13d*
+     701 - 781 = 50d*
+     800       = 01d
+     801       = 02d
+     802       = 03d
+     803 - 804 = 04d
+     
+    */
+    
     // MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +65,8 @@ class ClimaAtualViewController: UIViewController {
                 guard let desc = tempo.weather?.first??.description else { return }
                 self.lblDescrição.text = desc
                 
+                self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
+               
             }
         }
         
@@ -57,6 +79,36 @@ class ClimaAtualViewController: UIViewController {
         self.lblSensacao.text = "Sensação: \(Int(tempSen))°"
         self.lblTempMin.text = "Mín: \(Int(tempMin))°"
         self.lblTempMax.text = "Max: \(Int(tempMax))°"
+    }
+    
+    // MARK: AtualizarIcone
+    // Função que atualiza o ícone mostrado na tela, fazendo o calculo do ID pra encontrar no dicionário o valor
+    func AtualizarIcone(Cod: Int, dt: Int){
+        var codCent: Int = Cod / 100
+        if codCent == 5 {
+            codCent = Cod / 10
+        }
+        else if codCent == 8 {
+            codCent = Cod
+        }
+        
+        let date = Date(timeIntervalSince1970: Double(dt))
+        
+        // Negócio pra formatar a data, pois estava no formato GMT-00:00 e não estamos nessa timezone
+        let formatador = DateFormatter()
+        formatador.timeZone = TimeZone(abbreviation: "GMT-03:00") // timezone do Brasil
+        formatador.locale = NSLocale.current
+        formatador.dateFormat = "HH:mm" // formato do horário
+        let horaDate = formatador.string(from: date)
+//        print(strDate)
+        
+        if horaDate > "18:00" {
+            imgClima.image = UIImage(named: iconesN[codCent] ?? "01n")
+        }
+        else {
+            imgClima.image = UIImage(named: iconesD[codCent] ?? "01d")
+        }
+        
     }
     
     // MARK: IBAction toggleTemp

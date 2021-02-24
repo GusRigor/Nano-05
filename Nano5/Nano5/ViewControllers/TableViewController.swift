@@ -10,6 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController, UISearchBarDelegate{
     @IBOutlet var CidadesTable: UITableView!
+    var c = Cidades().recebe()
     @IBOutlet weak var PesquisarCidade: UISearchBar!
     
     var cidades = ["Sao Paulo","Osasco","Diadema","Dubai","Londres"]
@@ -28,7 +29,8 @@ class TableViewController: UITableViewController, UISearchBarDelegate{
 extension TableViewController{
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("vc clicou em \(filtro[indexPath.row])")
+        print("vc clicou em \(c["cidades"]![indexPath.row]["nome"]!)")
+
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -36,15 +38,17 @@ extension TableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filtro.count
+        return c["cidades"]!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CidadesTable.dequeueReusableCell(withIdentifier: "CidadesCelula") as! CidadeTableViewCell
-        let cidade = filtro[indexPath.row]
-        let temperatura = temperaturas[indexPath.row]
-        cell.NomeCidade.text = cidade
-        cell.TemperaturaCidade.text = String(temperatura)
+        let cidade = c["cidades"]![indexPath.row]["nome"]!
+        cell.NomeCidade.text = cidade as? String
+        
+//        let temperatura = temperaturas[indexPath.row]
+//        cell.TemperaturaCidade.text = String(temperatura)
+
         
         return cell
     }

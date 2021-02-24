@@ -220,4 +220,9 @@ var cities = ["cidades":
                     ]
                 ]
             ]
+    
+    func recebe() -> [String : [[String : Any]]]{
+        return cities
+    }
 }
+

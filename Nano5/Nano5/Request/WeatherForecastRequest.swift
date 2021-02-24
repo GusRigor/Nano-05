@@ -9,7 +9,7 @@ import Foundation
 
 class WeatherForecastRequest{
     class func pesquisarTempo(_ lat: Float,_ lon: Float , completion: @escaping (WeatherForecast) -> Void) {
-        guard let url = URL(string:"https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&&exclude=minutely,hourly,alerts&appid={API KEY}") else { return }
+        guard let url = URL(string:"https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&&exclude=minutely,hourly,alerts&appid=") else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error == nil {
                 guard let response = response as? HTTPURLResponse else { return }

@@ -179,7 +179,7 @@
         <!--Detalhes-->
         <scene sceneID="yKt-hL-1gY">
             <objects>
-                <viewController id="tWn-LF-EUW" sceneMemberID="viewController">
+                <viewController id="tWn-LF-EUW" customClass="DetalhesViewController" customModule="Nano5" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VJM-G6-7xy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -218,6 +218,13 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nascer do sol: 06:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y1J-qO-qM1">
+                                                <rect key="frame" x="18" y="135" width="388" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SP2-ml-4Ub">
                                                 <rect key="frame" x="18" y="237" width="388" height="573"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -246,6 +253,13 @@
                                                     <segue destination="vxI-N3-ED6" kind="presentation" identifier="segueQualAr" modalPresentationStyle="formSheet" id="Vnw-dr-d49"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pôr do sol: 18:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WF2-mn-gqL">
+                                                <rect key="frame" x="18" y="164" width="388" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <constraints>
@@ -272,18 +286,31 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Detalhes" id="CSV-6o-u9b">
-                        <barButtonItem key="rightBarButtonItem" title="°C / °F" id="fkV-aw-dDC"/>
+                        <barButtonItem key="rightBarButtonItem" title="°C / °F" id="fkV-aw-dDC">
+                            <connections>
+                                <action selector="toggleTemp:" destination="tWn-LF-EUW" id="Nsf-oX-bZ3"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <size key="freeformSize" width="414" height="1200"/>
+                    <connections>
+                        <outlet property="btnEscalaTemp" destination="fkV-aw-dDC" id="gZu-gF-riK"/>
+                        <outlet property="lblNasceSol" destination="Y1J-qO-qM1" id="vaz-8x-WZJ"/>
+                        <outlet property="lblPorSol" destination="WF2-mn-gqL" id="BiA-CD-R1m"/>
+                        <outlet property="lblQualAr" destination="hv2-hf-mIo" id="l8a-FF-FiN"/>
+                        <outlet property="lblUmidade" destination="ORj-bc-xht" id="szQ-lz-BDC"/>
+                        <outlet property="lblUv" destination="BNH-Fm-j8Y" id="CeE-Hg-ACe"/>
+                        <outlet property="lblVento" destination="zLG-Bf-ZSe" id="Meb-OO-Nu1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lsu-k9-Bli" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1369.5652173913045" y="851.78571428571422"/>
         </scene>
-        <!--View Controller-->
+        <!--Detalhe Ar View Controller-->
         <scene sceneID="Fqe-qs-kht">
             <objects>
-                <viewController id="vxI-N3-ED6" sceneMemberID="viewController">
+                <viewController id="vxI-N3-ED6" customClass="DetalheArViewController" customModule="Nano5" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h4z-Gi-nP9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -367,7 +394,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="b5D-mD-ozC" kind="relationship" relationship="rootViewController" id="KAv-TB-rCo"/>
+                        <segue destination="b5D-mD-ozC" kind="relationship" relationship="rootViewController" id="l6W-T6-PLH"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6R7-io-Kyc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController, UISearchBarDelegate{
     @IBOutlet var CidadesTable: UITableView!
-    var c = Cidades().recebe()
+    var city = Cidades().recebe()
     @IBOutlet weak var PesquisarCidade: UISearchBar!
     
     var cidades = ["Sao Paulo","Osasco","Diadema","Dubai","Londres"]
@@ -29,7 +29,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate{
 extension TableViewController{
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("vc clicou em \(c["cidades"]![indexPath.row]["nome"]!)")
+        print("vc clicou em \(city["cidades"]![indexPath.row]["nome"]!)")
 
     }
     
@@ -38,12 +38,12 @@ extension TableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return c["cidades"]!.count
+        return city["cidades"]!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CidadesTable.dequeueReusableCell(withIdentifier: "CidadesCelula") as! CidadeTableViewCell
-        let cidade = c["cidades"]![indexPath.row]["nome"]!
+        let cidade = city["cidades"]![indexPath.row]["nome"]!
         cell.NomeCidade.text = cidade as? String
         
 //        let temperatura = temperaturas[indexPath.row]

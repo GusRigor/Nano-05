@@ -18,20 +18,22 @@ class TableViewController: UITableViewController, UISearchBarDelegate{
     
     var cidades = ["Sao Paulo","Osasco","Diadema","Dubai","Londres"]
     var temperaturas = [22,22,24,30,12]
-    var filtro: [String]!
+    var filtro: [Cidade]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         CidadesTable.delegate = self
         CidadesTable.dataSource = self
         PesquisarCidade.delegate = self
-        filtro = cidades
+        filtro = cidadesCoreData
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cidadesCoreData = appDelegate.fetchRecords()
+        filtro = cidadesCoreData
         CidadesTable.reloadData()
+        
     }
 }
 
@@ -47,12 +49,12 @@ extension TableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cidadesCoreData.count
+        return filtro.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CidadesTable.dequeueReusableCell(withIdentifier: "CidadesCelula") as! CidadeTableViewCell
-        let cidade = cidadesCoreData[indexPath.row].nome
+        let cidade = filtro[indexPath.row].nome
         cell.NomeCidade.text = cidade
         
 //        let temperatura = temperaturas[indexPath.row]
@@ -76,10 +78,10 @@ extension TableViewController{
         filtro = []
         
         if searchText == "" {
-            filtro = cidades
+            filtro = cidadesCoreData
         }else{
-            for cidade in cidades{
-                if cidade.lowercased().contains(searchText.lowercased()){
+            for cidade in cidadesCoreData{
+                if cidade.nome!.lowercased().contains(searchText.lowercased()){
                     filtro.append(cidade)
                 }
             }

@@ -66,9 +66,10 @@ extension TableViewController{
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-            let cidade = cidadesCoreData[indexPath.row]
+            let cidade = filtro[indexPath.row]
             appDelegate.deleteRecord(cidade: cidade)
             cidadesCoreData = appDelegate.fetchRecords()
+            filtro = cidadesCoreData
             CidadesTable.reloadData()
         }
     }

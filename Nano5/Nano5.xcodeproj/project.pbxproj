@@ -22,6 +22,8 @@
 		1C8E7F5F25E441B600D9C1FB /* AirQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8E7F5E25E441B600D9C1FB /* AirQuality.swift */; };
 		1C8E7F6225E4424000D9C1FB /* WeatherOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8E7F6125E4424000D9C1FB /* WeatherOpen.swift */; };
 		1C8E7F6525E447CF00D9C1FB /* WeatherForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8E7F6425E447CF00D9C1FB /* WeatherForecast.swift */; };
+		D3EC9A7625E58ED0005D72C9 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EC9A7525E58ED0005D72C9 /* TableViewController.swift */; };
+		D3EC9A7925E59129005D72C9 /* CidadeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EC9A7825E59129005D72C9 /* CidadeTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		1C8E7F5E25E441B600D9C1FB /* AirQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirQuality.swift; sourceTree = "<group>"; };
 		1C8E7F6125E4424000D9C1FB /* WeatherOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherOpen.swift; sourceTree = "<group>"; };
 		1C8E7F6425E447CF00D9C1FB /* WeatherForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecast.swift; sourceTree = "<group>"; };
+		D3EC9A7525E58ED0005D72C9 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		D3EC9A7825E59129005D72C9 /* CidadeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CidadeTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 				1C8E7F4A25E43C4F00D9C1FB /* Assets.xcassets */,
 				1C8E7F4F25E43C4F00D9C1FB /* Info.plist */,
 				1C8E7F4725E43C4D00D9C1FB /* Nano5.xcdatamodeld */,
+				D3EC9A7825E59129005D72C9 /* CidadeTableViewCell.swift */,
 			);
 			path = Nano5;
 			sourceTree = "<group>";
@@ -101,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				1C8E7F4225E43C4D00D9C1FB /* ViewController.swift */,
+				D3EC9A7525E58ED0005D72C9 /* TableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -198,10 +204,12 @@
 			files = (
 				1C8E7F4325E43C4D00D9C1FB /* ViewController.swift in Sources */,
 				1C8E7F3F25E43C4D00D9C1FB /* AppDelegate.swift in Sources */,
+				D3EC9A7625E58ED0005D72C9 /* TableViewController.swift in Sources */,
 				1C8E7F6225E4424000D9C1FB /* WeatherOpen.swift in Sources */,
 				1C631A0425E57C2300667EB9 /* WeatherForecastRequest.swift in Sources */,
 				1C8E7F4125E43C4D00D9C1FB /* SceneDelegate.swift in Sources */,
 				1C6319FB25E57BBB00667EB9 /* AirRequest.swift in Sources */,
+				D3EC9A7925E59129005D72C9 /* CidadeTableViewCell.swift in Sources */,
 				1C6319FE25E57BF300667EB9 /* WeatherNameRequest.swift in Sources */,
 				1C8E7F4925E43C4D00D9C1FB /* Nano5.xcdatamodeld in Sources */,
 				1C631A0125E57C0900667EB9 /* WeatherGeoRequest.swift in Sources */,

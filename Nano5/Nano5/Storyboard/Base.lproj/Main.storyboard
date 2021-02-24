@@ -77,7 +77,7 @@
         <!--Local-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Nano5" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ClimaAtualViewController" customModule="Nano5" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -149,8 +149,22 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Local" id="NPy-18-c8S">
-                        <barButtonItem key="rightBarButtonItem" title="°C / °F" id="Led-9V-sVd"/>
+                        <barButtonItem key="rightBarButtonItem" title="°C / °F" id="Led-9V-sVd">
+                            <connections>
+                                <action selector="toggleTemp:" destination="BYZ-38-t0r" id="rjd-mD-FPV"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="btnescalaTemp" destination="Led-9V-sVd" id="nq5-Yz-cqp"/>
+                        <outlet property="imgClima" destination="6rS-dk-Va1" id="3RN-8N-CfD"/>
+                        <outlet property="lblDescrição" destination="g1K-p2-oXa" id="g8a-BB-lGX"/>
+                        <outlet property="lblDica" destination="BC0-On-RFP" id="9iC-5T-9Gy"/>
+                        <outlet property="lblSensacao" destination="ylN-e0-OoF" id="g4G-vW-doA"/>
+                        <outlet property="lblTempAtual" destination="Eoa-ln-uk8" id="OP6-S4-tCQ"/>
+                        <outlet property="lblTempMax" destination="BvU-GX-CKp" id="B09-Yw-kut"/>
+                        <outlet property="lblTempMin" destination="Xgq-cJ-NF4" id="U3p-64-iGq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -347,7 +361,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="b5D-mD-ozC" kind="relationship" relationship="rootViewController" id="6b0-UX-jwJ"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="fjW-fP-ytv"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6R7-io-Kyc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -355,6 +369,9 @@
             <point key="canvasLocation" x="490" y="124"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="fjW-fP-ytv"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="sun.min" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">

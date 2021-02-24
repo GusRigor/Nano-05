@@ -31,6 +31,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+    
+    //CRUD
+    
+    //Create
+    func insertRecord(nome: String, lat: Float,  lon: Float, time:Date){
+        let cidade = Cidade(context: persistentContainer.viewContext)
+        cidade.nome = nome
+        cidade.lat = lat
+        cidade.lon = lon
+        cidade.time = time
+        saveContext()
+    }
+    
+    //Read
+    func fetchRecords() -> [Cidade]{
+        var arrayCidade = [Cidade]()
+        let fetchRequest = NSFetchRequest<Cidade>(entityName: "Cidade")
+        
+        do {
+            arrayCidade  = try persistentContainer.viewContext.fetch(fetchRequest)
+        }catch{
+            print(error)
+        }
+        return arrayCidade
+    }
+    
+    //Update
+//    func updateRecord(cidade: Cidade, nome: String, lat: Float,  lon: Float, time:Date){
+//        cidade.nome = nome
+//        cidade.lat = lat
+//        cidade.lon = lon
+//        cidade.time = time
+//        saveContext()
+//    }
+    
+    // Delete
+    func deleteRecord(cidade : Cidade){
+        persistentContainer.viewContext.delete(cidade)
+        saveContext()
+    }
+    
 
     // MARK: - Core Data stack
 

@@ -10,7 +10,10 @@ import UIKit
 
 class TableViewController: UITableViewController, UISearchBarDelegate{
     @IBOutlet var CidadesTable: UITableView!
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     var city = Cidades().recebe()
+    var cidadesCoreData = [Cidade]()
     @IBOutlet weak var PesquisarCidade: UISearchBar!
     
     var cidades = ["Sao Paulo","Osasco","Diadema","Dubai","Londres"]
@@ -24,12 +27,18 @@ class TableViewController: UITableViewController, UISearchBarDelegate{
         PesquisarCidade.delegate = self
         filtro = cidades
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        cidadesCoreData = appDelegate.fetchRecords()
+        CidadesTable.reloadData()
+    }
 }
 
 extension TableViewController{
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("vc clicou em \(city["cidades"]![indexPath.row]["nome"]!)")
+        print("vc clicou em \(cidadesCoreData[indexPath.row].nome!)")
 
     }
     
@@ -38,13 +47,13 @@ extension TableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return city["cidades"]!.count
+        return cidadesCoreData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CidadesTable.dequeueReusableCell(withIdentifier: "CidadesCelula") as! CidadeTableViewCell
-        let cidade = city["cidades"]![indexPath.row]["nome"]!
-        cell.NomeCidade.text = cidade as? String
+        let cidade = cidadesCoreData[indexPath.row].nome
+        cell.NomeCidade.text = cidade
         
 //        let temperatura = temperaturas[indexPath.row]
 //        cell.TemperaturaCidade.text = String(temperatura)
@@ -52,6 +61,16 @@ extension TableViewController{
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            let cidade = cidadesCoreData[indexPath.row]
+            appDelegate.deleteRecord(cidade: cidade)
+            cidadesCoreData = appDelegate.fetchRecords()
+            CidadesTable.reloadData()
+        }
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         
         filtro = []
@@ -68,7 +87,12 @@ extension TableViewController{
         self.CidadesTable.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("You're")
+        self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: 1, lon: 2, time: Date())
+        print("You're the breathtaking")
+        print(Date())
+        cidadesCoreData = appDelegate.fetchRecords()
+        CidadesTable.reloadData()
+        
 //        cidades.append(searchBar.searchTextField.text!)
 //        temperaturas.append(20)
     }

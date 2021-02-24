@@ -8,7 +8,7 @@
 import Foundation
 
 class Cidades{
-var cities = ["cidades":
+private var cities = ["cidades":
                 [
                 ["nome": "sao paulo",
                         "coord": [

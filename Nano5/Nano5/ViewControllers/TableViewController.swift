@@ -10,8 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController{
     @IBOutlet var CidadesTable: UITableView!
-    var cidades = ["Sao Paulo","Osasco","Diadema","Dubai","Londres"]
-    var temperaturas = [22,22,24,30,12]
+    var c = Cidades().recebe()
     override func viewDidLoad() {
         super.viewDidLoad()
         CidadesTable.delegate = self
@@ -22,7 +21,7 @@ class TableViewController: UITableViewController{
 extension TableViewController{
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("vc clicou em \(cidades[indexPath.row])")
+        print("vc clicou em \(c["cidades"]![indexPath.row]["nome"]!)")
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -30,15 +29,16 @@ extension TableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cidades.count
+        return c["cidades"]!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CidadesTable.dequeueReusableCell(withIdentifier: "CidadesCelula") as! CidadeTableViewCell
-        let cidade = cidades[indexPath.row]
-        let temperatura = temperaturas[indexPath.row]
-        cell.NomeCidade.text = cidade
-        cell.TemperaturaCidade.text = String(temperatura)
+        let cidade = c["cidades"]![indexPath.row]["nome"]!
+        cell.NomeCidade.text = cidade as? String
+        
+//        let temperatura = temperaturas[indexPath.row]
+//        cell.TemperaturaCidade.text = String(temperatura)
         
         return cell
     }

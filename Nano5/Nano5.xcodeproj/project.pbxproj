@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		103036E125E588150048D9BD /* ClimaAtualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103036E025E588150048D9BD /* ClimaAtualViewController.swift */; };
-		103036E525E590280048D9BD /* ConversorTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103036E425E590280048D9BD /* ConversorTemp.swift */; };
+		103036E525E590280048D9BD /* Conversores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103036E425E590280048D9BD /* Conversores.swift */; };
+		10463F6325E6E13800FADFAD /* DetalhesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10463F6225E6E13800FADFAD /* DetalhesViewController.swift */; };
+		10E1031525E6EF380056BC1C /* DetalheArViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E1031425E6EF380056BC1C /* DetalheArViewController.swift */; };
 		1C6319FB25E57BBB00667EB9 /* AirRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6319FA25E57BBB00667EB9 /* AirRequest.swift */; };
 		1C6319FE25E57BF300667EB9 /* WeatherNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6319FD25E57BF300667EB9 /* WeatherNameRequest.swift */; };
 		1C631A0125E57C0900667EB9 /* WeatherGeoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C631A0025E57C0900667EB9 /* WeatherGeoRequest.swift */; };
@@ -31,7 +33,9 @@
 
 /* Begin PBXFileReference section */
 		103036E025E588150048D9BD /* ClimaAtualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClimaAtualViewController.swift; sourceTree = "<group>"; };
-		103036E425E590280048D9BD /* ConversorTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversorTemp.swift; sourceTree = "<group>"; };
+		103036E425E590280048D9BD /* Conversores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversores.swift; sourceTree = "<group>"; };
+		10463F6225E6E13800FADFAD /* DetalhesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalhesViewController.swift; sourceTree = "<group>"; };
+		10E1031425E6EF380056BC1C /* DetalheArViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalheArViewController.swift; sourceTree = "<group>"; };
 		1C6319FA25E57BBB00667EB9 /* AirRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirRequest.swift; sourceTree = "<group>"; };
 		1C6319FD25E57BF300667EB9 /* WeatherNameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNameRequest.swift; sourceTree = "<group>"; };
 		1C631A0025E57C0900667EB9 /* WeatherGeoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherGeoRequest.swift; sourceTree = "<group>"; };
@@ -114,9 +118,10 @@
 			children = (
 				1C8E7F4225E43C4D00D9C1FB /* ViewController.swift */,
 				103036E025E588150048D9BD /* ClimaAtualViewController.swift */,
-				103036E425E590280048D9BD /* ConversorTemp.swift */,
+				103036E425E590280048D9BD /* Conversores.swift */,
 				D3EC9A7525E58ED0005D72C9 /* TableViewController.swift */,
-
+				10463F6225E6E13800FADFAD /* DetalhesViewController.swift */,
+				10E1031425E6EF380056BC1C /* DetalheArViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -221,13 +226,15 @@
 				1C8E7F4125E43C4D00D9C1FB /* SceneDelegate.swift in Sources */,
 				1C6319FB25E57BBB00667EB9 /* AirRequest.swift in Sources */,
 				103036E125E588150048D9BD /* ClimaAtualViewController.swift in Sources */,
-				103036E525E590280048D9BD /* ConversorTemp.swift in Sources */,
+				103036E525E590280048D9BD /* Conversores.swift in Sources */,
 				D3EC9A7925E59129005D72C9 /* CidadeTableViewCell.swift in Sources */,
 				1C6319FE25E57BF300667EB9 /* WeatherNameRequest.swift in Sources */,
 				1C8E7F4925E43C4D00D9C1FB /* Nano5.xcdatamodeld in Sources */,
 				1C631A0125E57C0900667EB9 /* WeatherGeoRequest.swift in Sources */,
+				10463F6325E6E13800FADFAD /* DetalhesViewController.swift in Sources */,
 				1C8E7F5F25E441B600D9C1FB /* AirQuality.swift in Sources */,
 				1C8E7F5A25E4407900D9C1FB /* WeatherFcc.swift in Sources */,
+				10E1031525E6EF380056BC1C /* DetalheArViewController.swift in Sources */,
 				1C8E7F6525E447CF00D9C1FB /* WeatherForecast.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

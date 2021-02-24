@@ -9,7 +9,7 @@ import Foundation
 
 class WeatherNameRequest{
     class func pesquisarTempo(_ name: String, completion: @escaping (WeatherOpen) -> Void) {
-        guard let url = URL(string:"http://api.openweathermap.org/data/2.5/weather?q=\(name)&appid={API KEY}") else { return }
+        guard let url = URL(string:"http://api.openweathermap.org/data/2.5/weather?q=\(name)&appid=") else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error == nil {
                 guard let response = response as? HTTPURLResponse else { return }

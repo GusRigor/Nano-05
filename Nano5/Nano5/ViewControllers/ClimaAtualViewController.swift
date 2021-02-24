@@ -92,16 +92,7 @@ class ClimaAtualViewController: UIViewController {
             codCent = Cod
         }
         
-        let date = Date(timeIntervalSince1970: Double(dt))
-        
-        // Negócio pra formatar a data, pois estava no formato GMT-00:00 e não estamos nessa timezone
-        let formatador = DateFormatter()
-        formatador.timeZone = TimeZone(abbreviation: "GMT-03:00") // timezone do Brasil
-        formatador.locale = NSLocale.current
-        formatador.dateFormat = "HH:mm" // formato do horário
-        let horaDate = formatador.string(from: date)
-//        print(strDate)
-        
+        let horaDate = Conversores.UnixParaDate(UNIX: dt, dataCompleta: false)
         if horaDate > "18:00" {
             imgClima.image = UIImage(named: iconesN[codCent] ?? "01n")
         }
@@ -116,31 +107,29 @@ class ClimaAtualViewController: UIViewController {
     @IBAction func toggleTemp(_ sender: Any) {
         if btnescalaTemp.title == "°C" {
             btnescalaTemp.title = "°F"
-            tempAtual = ConversorTemp.CelsiusParaFahrenheit(TempCelsius: tempAtual)
-            tempMin = ConversorTemp.CelsiusParaFahrenheit(TempCelsius: tempMin)
-            tempMax = ConversorTemp.CelsiusParaFahrenheit(TempCelsius: tempMax)
-            tempSen = ConversorTemp.CelsiusParaFahrenheit(TempCelsius: tempSen)
+            tempAtual = Conversores.CelsiusParaFahrenheit(TempCelsius: tempAtual)
+            tempMin = Conversores.CelsiusParaFahrenheit(TempCelsius: tempMin)
+            tempMax = Conversores.CelsiusParaFahrenheit(TempCelsius: tempMax)
+            tempSen = Conversores.CelsiusParaFahrenheit(TempCelsius: tempSen)
             AtualizarTemperaturas()
         }
         else {
             btnescalaTemp.title = "°C"
-            tempAtual = ConversorTemp.FahrenheitParaCelsius(TempFahr: tempAtual)
-            tempMin = ConversorTemp.FahrenheitParaCelsius(TempFahr: tempMin)
-            tempMax = ConversorTemp.FahrenheitParaCelsius(TempFahr: tempMax)
-            tempSen = ConversorTemp.FahrenheitParaCelsius(TempFahr: tempSen)
+            tempAtual = Conversores.FahrenheitParaCelsius(TempFahr: tempAtual)
+            tempMin = Conversores.FahrenheitParaCelsius(TempFahr: tempMin)
+            tempMax = Conversores.FahrenheitParaCelsius(TempFahr: tempMax)
+            tempSen = Conversores.FahrenheitParaCelsius(TempFahr: tempSen)
             AtualizarTemperaturas()
         }
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    // MARK: prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let dest = segue.destination as! DetalhesViewController
+        dest.temp = btnescalaTemp.title!
     }
-    */
+    
 
 }

@@ -328,7 +328,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="b5D-mD-ozC" kind="relationship" relationship="rootViewController" id="gPn-vC-6ZI"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="fjW-fP-ytv"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6R7-io-Kyc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -336,6 +336,9 @@
             <point key="canvasLocation" x="490" y="124"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="fjW-fP-ytv"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="sun.min" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">

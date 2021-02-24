@@ -38,10 +38,13 @@ class ClimaAtualViewController: UIViewController {
                 self.tempSen = tempo.main?.feels_like ?? 1234
                 self.tempMin = tempo.main?.temp_min ?? 1234
                 self.tempMax = tempo.main?.temp_max ?? 1234
-                self.lblDica.text = "Isso é uma dica muito útil pra esse tempo"
-                self.lblDescrição.text = "\(String(tempo.weather?.description ?? "Erro :("))"
+                self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
                 self.title = tempo.name ?? "Erro :("
                 self.AtualizarTemperaturas()
+                
+                guard let desc = tempo.weather?.first??.description else { return }
+                self.lblDescrição.text = desc
+                
             }
         }
         

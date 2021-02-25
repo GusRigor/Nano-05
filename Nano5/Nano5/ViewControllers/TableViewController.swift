@@ -165,5 +165,7 @@ extension TableViewController{
         print("You're the breathtaking")
         cidadesCoreData = appDelegate.fetchRecords()
         CidadesTable.reloadData()
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

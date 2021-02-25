@@ -6,12 +6,8 @@
 //
 
 import UIKit
-import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
-    var lat: Float = 0.0
-    var lon: Float = 0.0
-    var manager: CLLocationManager?
+class ViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,23 +15,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        manager = CLLocationManager()
-        manager?.delegate = self
-        manager?.desiredAccuracy = kCLLocationAccuracyBest
-        manager?.requestWhenInUseAuthorization()
-        manager?.startUpdatingLocation()
     }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let first = locations.first else {
-            return
-            
-        }
-        lat = Float(first.coordinate.latitude)
-        lon = Float(first.coordinate.longitude)
-        print("\(lat) | \(lon)")
-    }
-
 
 }
 

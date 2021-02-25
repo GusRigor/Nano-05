@@ -41,6 +41,8 @@ extension TableViewController{
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("vc clicou em \(cidadesCoreData[indexPath.row].nome!)")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
+        navigationController?.pushViewController(vc, animated: true)
 
     }
     

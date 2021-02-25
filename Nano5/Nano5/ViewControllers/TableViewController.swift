@@ -90,13 +90,18 @@ extension TableViewController{
         self.CidadesTable.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: 1, lon: 2, time: Date())
+        var nAchou = true
+        for cidade in Cidades().cities["cidades"]!{
+            if searchBar.searchTextField.text!.lowercased() == cidade["nome"] as! String {
+                self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: cidade["lat"] as! Float, lon: cidade["lon"] as! Float, time: Date())
+                nAchou = false
+            }
+        }
+        if nAchou {
+            self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: 1, lon: 2, time: Date())
+        }
         print("You're the breathtaking")
-        print(Date())
         cidadesCoreData = appDelegate.fetchRecords()
         CidadesTable.reloadData()
-        
-//        cidades.append(searchBar.searchTextField.text!)
-//        temperaturas.append(20)
     }
 }

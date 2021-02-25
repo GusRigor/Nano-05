@@ -68,8 +68,12 @@ extension TableViewController{
         if permissao == 1{
             if indexPath.row == 0{
                 print("vc clicou em minha localizacao")
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
+                navigationController?.pushViewController(vc, animated: true)
             }else{
                 print("vc clicou em \(cidadesCoreData[indexPath.row - 1].nome!)")
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
+                navigationController?.pushViewController(vc, animated: true)
             }
         }else{
             print("vc clicou em \(cidadesCoreData[indexPath.row].nome!)")

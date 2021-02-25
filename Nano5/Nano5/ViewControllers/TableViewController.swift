@@ -7,17 +7,20 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
-class TableViewController: UITableViewController, UISearchBarDelegate{
+class TableViewController: UITableViewController, UISearchBarDelegate, CLLocationManagerDelegate{
+    var lat: Float = 0.0
+    var lon: Float = 0.0
+    var permissao: Int = 0
+    var manager: CLLocationManager?
+    
     @IBOutlet var CidadesTable: UITableView!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var city = Cidades().recebe()
     var cidadesCoreData = [Cidade]()
     @IBOutlet weak var PesquisarCidade: UISearchBar!
-    
-    var cidades = ["Sao Paulo","Osasco","Diadema","Dubai","Londres"]
-    var temperaturas = [22,22,24,30,12]
     var filtro: [Cidade]!
     
     override func viewDidLoad() {
@@ -34,14 +37,43 @@ class TableViewController: UITableViewController, UISearchBarDelegate{
         filtro = cidadesCoreData
         CidadesTable.reloadData()
         
+        
+        manager = CLLocationManager()
+        manager?.delegate = self
+        manager?.desiredAccuracy = kCLLocationAccuracyBest
+        manager?.requestWhenInUseAuthorization()
+        manager?.startUpdatingLocation()
+        
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let first = locations.first else {
+            return
+            
+        }
+        lat = Float(first.coordinate.latitude)
+        lon = Float(first.coordinate.longitude)
+        print("\(lat) | \(lon)")
+        permissao = 1
+        CidadesTable.reloadData()
+        
+    }
+
+    
 }
 
 extension TableViewController{
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("vc clicou em \(cidadesCoreData[indexPath.row].nome!)")
-
+        if permissao == 1{
+            if indexPath.row == 0{
+                print("vc clicou em minha localizacao")
+            }else{
+                print("vc clicou em \(cidadesCoreData[indexPath.row - 1].nome!)")
+            }
+        }else{
+            print("vc clicou em \(cidadesCoreData[indexPath.row].nome!)")
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -49,13 +81,27 @@ extension TableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filtro.count
+        if permissao == 1{
+            return (filtro.count + 1)
+        }else{
+            return filtro.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CidadesTable.dequeueReusableCell(withIdentifier: "CidadesCelula") as! CidadeTableViewCell
-        let cidade = filtro[indexPath.row].nome
-        cell.NomeCidade.text = cidade
+        
+        if permissao == 1{
+            if indexPath.row == 0{
+                cell.NomeCidade.text = "Minha Localização"
+            }else{
+                let cidade = filtro[indexPath.row - 1].nome
+                cell.NomeCidade.text = cidade
+            }
+        }else{
+                let cidade = filtro[indexPath.row].nome
+                cell.NomeCidade.text = cidade
+        }
         
 //        let temperatura = temperaturas[indexPath.row]
 //        cell.TemperaturaCidade.text = String(temperatura)
@@ -65,12 +111,22 @@ extension TableViewController{
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
-            let cidade = filtro[indexPath.row]
-            appDelegate.deleteRecord(cidade: cidade)
-            cidadesCoreData = appDelegate.fetchRecords()
-            filtro = cidadesCoreData
-            CidadesTable.reloadData()
+        if (permissao == 1 && indexPath.row != 0){
+            if editingStyle == .delete{
+                let cidade = filtro[indexPath.row - 1]
+                appDelegate.deleteRecord(cidade: cidade)
+                cidadesCoreData = appDelegate.fetchRecords()
+                filtro = cidadesCoreData
+                CidadesTable.reloadData()
+            }
+        }else if permissao == 0{
+            if editingStyle == .delete{
+                let cidade = filtro[indexPath.row]
+                appDelegate.deleteRecord(cidade: cidade)
+                cidadesCoreData = appDelegate.fetchRecords()
+                filtro = cidadesCoreData
+                CidadesTable.reloadData()
+            }
         }
     }
     

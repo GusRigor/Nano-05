@@ -100,13 +100,29 @@ extension TableViewController{
         if permissao == 1{
             if indexPath.row == 0{
                 cell.NomeCidade.text = "Minha Localização"
+                WeatherGeoRequest.pesquisarTempo(lat, lon) { (tempo) in
+                    DispatchQueue.main.sync {
+                        cell.TemperaturaCidade.text = String(format: "%.0f",tempo.main?.temp ?? 0) + "ºC"
+                    }
+                }
+                print(1)
             }else{
                 let cidade = filtro[indexPath.row - 1].nome
                 cell.NomeCidade.text = cidade
+                WeatherGeoRequest.pesquisarTempo(filtro[indexPath.row - 1].lat, filtro[indexPath.row - 1].lon) { (tempo) in
+                    DispatchQueue.main.sync {
+                        cell.TemperaturaCidade.text = String(format: "%.0f",tempo.main?.temp ?? 0) + "ºC"
+                    }
+                }
             }
         }else{
-                let cidade = filtro[indexPath.row].nome
-                cell.NomeCidade.text = cidade
+            let cidade = filtro[indexPath.row].nome
+            cell.NomeCidade.text = cidade
+            WeatherGeoRequest.pesquisarTempo(filtro[indexPath.row].lat, filtro[indexPath.row].lon) { (tempo) in
+                DispatchQueue.main.sync {
+                    cell.TemperaturaCidade.text = String(format: "%.0f",tempo.main?.temp ?? 0) + "ºC"
+                }
+            }
         }
         
 //        let temperatura = temperaturas[indexPath.row]

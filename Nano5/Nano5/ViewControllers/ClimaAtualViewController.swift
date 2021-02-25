@@ -51,6 +51,11 @@ class ClimaAtualViewController: UIViewController {
         super.viewDidLoad()
         
         // Como a requisição tá sendo feita pela API do FCC e ela vem com Celsius como padrão
+        
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         btnescalaTemp.title = "°C"
         WeatherGeoRequest.pesquisarTempo(-23.53, -46.62) { (tempo) in
             DispatchQueue.main.sync {
@@ -61,15 +66,14 @@ class ClimaAtualViewController: UIViewController {
                 self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
                 self.title = tempo.name ?? "Erro :("
                 self.AtualizarTemperaturas()
-                
+        
                 guard let desc = tempo.weather?.first??.description else { return }
                 self.lblDescrição.text = desc
-                
+        
                 self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
-               
+                            
             }
         }
-        
     }
     
     // MARK: AtualizarTemperaturas

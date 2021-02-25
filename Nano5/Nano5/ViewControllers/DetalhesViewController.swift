@@ -7,9 +7,18 @@
 
 import UIKit
 
-class DetalhesViewController: UIViewController {
+class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+   
+    
+    
+    let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
+    var items = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21"]
+    
+    
     var temp = ""
     var ultimaQualAr: AirQuality?
+    var ultimaForecast: WeatherForecast?
+    
     
     @IBOutlet weak var btnEscalaTemp: UIBarButtonItem!
     @IBOutlet weak var lblQualAr: UILabel!
@@ -18,14 +27,19 @@ class DetalhesViewController: UIViewController {
     @IBOutlet weak var lblVento: UILabel!
     @IBOutlet weak var lblNasceSol: UILabel!
     @IBOutlet weak var lblPorSol: UILabel!
-    
+
     // MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setTemperatura()
+    }
+
+    
+    // MARK: viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
         WeatherForecastRequest.pesquisarTempo(-23.53, -46.62) { (tempo) in
             DispatchQueue.main.sync {
+                self.ultimaForecast = tempo
                 self.lblUmidade.text = "Umidade: \(String(tempo.current?.humidity ?? 1234))%"
                 self.lblUv.text = "Indice UV: \(String(tempo.current?.uvi ?? 1234))"
                 self.lblVento.text = "Ventos: \(String(tempo.current?.wind_speed ?? 1234))m/s"
@@ -34,12 +48,15 @@ class DetalhesViewController: UIViewController {
             }
         }
         
+        setTemperatura()
+        
         AirRequest.pesquisarQualidadeAr(-23.53, -46.62) { (Ar) in
             DispatchQueue.main.sync {
                 self.ultimaQualAr = Ar
                 self.lblQualAr.text = "Qualidade do ar: \(String(Ar.list?.first??.main?.aqi ?? 0))"
             }
         }
+        
     }
     
     // MARK: setTemperatura
@@ -53,24 +70,44 @@ class DetalhesViewController: UIViewController {
         self.lblPorSol.text = "Pôr do Sol: \(Conversores.UnixParaDate(UNIX: poe, dataCompleta: false))"
     }
     
+    // MARK: - Relacionadas CollectionView
+    
+    // Quantidade de celulas, UICollectionViewDataSource protocol
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.items.count
+    }
+    
+    // Uma célula pra cada index
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! MyCollectionViewCell
+        
+        cell.date.text = self.items[indexPath.row]
+        cell.backgroundColor = UIColor.lightGray
+        collectionView.isScrollEnabled = false
+        
+        return cell
+    }
+    
+    // MARK: UICollectionViewDelegate protocol
+    // Quando seleciona alguma coisa
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("You selected cell #\(indexPath.item)!")
+    }
+    
+    // MARK: - End
+    
+    
+    
     // MARK: IBAction toggleTemp
     @IBAction func toggleTemp(_ sender: Any) {
-//        if btnescalaTemp.title == "°C" {
-//            btnescalaTemp.title = "°F"
-//            tempAtual = ConversorTemp.CelsiusParaFahrenheit(TempCelsius: tempAtual)
-//            tempMin = ConversorTemp.CelsiusParaFahrenheit(TempCelsius: tempMin)
-//            tempMax = ConversorTemp.CelsiusParaFahrenheit(TempCelsius: tempMax)
-//            tempSen = ConversorTemp.CelsiusParaFahrenheit(TempCelsius: tempSen)
-//            AtualizarTemperaturas()
-//        }
-//        else {
-//            btnescalaTemp.title = "°C"
-//            tempAtual = ConversorTemp.FahrenheitParaCelsius(TempFahr: tempAtual)
-//            tempMin = ConversorTemp.FahrenheitParaCelsius(TempFahr: tempMin)
-//            tempMax = ConversorTemp.FahrenheitParaCelsius(TempFahr: tempMax)
-//            tempSen = ConversorTemp.FahrenheitParaCelsius(TempFahr: tempSen)
-//            AtualizarTemperaturas()
-//        }
+        if btnEscalaTemp.title == "°C" {
+            btnEscalaTemp.title = "°F"
+
+        }
+        else {
+            btnEscalaTemp.title = "°C"
+            
+        }
     }
     
 

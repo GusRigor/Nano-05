@@ -58,13 +58,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //Update
-//    func updateRecord(cidade: Cidade, nome: String, lat: Float,  lon: Float, time:Date){
-//        cidade.nome = nome
-//        cidade.lat = lat
-//        cidade.lon = lon
-//        cidade.time = time
-//        saveContext()
-//    }
+    func updateRecord(cidade: Cidade, nome: String, lat: Float,  lon: Float){
+        cidade.nome = nome
+        cidade.lat = lat
+        cidade.lon = lon
+        saveContext()
+    }
     
     // Delete
     func deleteRecord(cidade : Cidade){

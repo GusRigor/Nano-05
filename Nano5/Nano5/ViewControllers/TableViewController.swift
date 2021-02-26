@@ -76,12 +76,14 @@ extension TableViewController{
 //                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
                 tLat = lat; tLon = lon; geoAPI = true
 //                navigationController?.pushViewController(vc, animated: true)
+                PesquisarCidade.endEditing(true)
                 performSegue(withIdentifier: "segueCidade", sender: self)
             }else{
                 print("vc clicou em \(cidadesCoreData[indexPath.row - 1].nome!)")
 //                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
                 tLat = cidadesCoreData[indexPath.row-1].lat; tLon = cidadesCoreData[indexPath.row-1].lon; geoAPI = true
 //                navigationController?.pushViewController(vc, animated: true)
+                PesquisarCidade.endEditing(true)
                 performSegue(withIdentifier: "segueCidade", sender: self)
             }
         }else{
@@ -89,6 +91,7 @@ extension TableViewController{
 //            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
             tLat = cidadesCoreData[indexPath.row].lat; tLon = cidadesCoreData[indexPath.row].lon; geoAPI = true
 //            navigationController?.pushViewController(vc, animated: true)
+            PesquisarCidade.endEditing(true)
             performSegue(withIdentifier: "segueCidade", sender: self)
         }
     }
@@ -201,6 +204,8 @@ extension TableViewController{
         //let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
         tLat = lat; tLon = lon
         cidadeTelaSeguinte = nAchou ? cidadesCoreData[cidadesCoreData.count-1] : nil
+        PesquisarCidade.endEditing(true)
+        PesquisarCidade.text = ""
         //navigationController?.pushViewController(vc, animated: true)
         performSegue(withIdentifier: "segueCidade", sender: self)
     }

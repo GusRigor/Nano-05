@@ -151,7 +151,7 @@ class ClimaAtualViewController: UIViewController {
             codCent = Cod
         }
         
-        let horaDate = Conversores.UnixParaDate(UNIX: dt, dataCompleta: false)
+        let horaDate = Conversores.UnixParaDate(UNIX: dt, diaMes: false)
         if horaDate > "18:00" {
             imgClima.image = UIImage(named: iconesN[codCent] ?? "01n")
         }
@@ -178,6 +178,8 @@ class ClimaAtualViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let dest = segue.destination as! DetalhesViewController
         dest.temp = btnescalaTemp.title!
+        dest.lat = lat
+        dest.lon = lon
     }
     
 

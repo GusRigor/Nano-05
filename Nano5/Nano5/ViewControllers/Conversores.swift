@@ -27,13 +27,13 @@ class Conversores {
         return ((TempFahr - 32) / 1.8)
     }
     
-    class func UnixParaDate(UNIX: Int, dataCompleta: Bool) -> String {
+    class func UnixParaDate(UNIX: Int, diaMes: Bool) -> String {
         let date = Date(timeIntervalSince1970: Double(UNIX))
         // Negócio pra formatar a data, pois estava no formato GMT-00:00 e não estamos nessa timezone
         let formatador = DateFormatter()
         formatador.timeZone = TimeZone(abbreviation: "GMT-03:00") // timezone do Brasil
         formatador.locale = NSLocale.current
-        if dataCompleta {
+        if diaMes {
             formatador.dateFormat = "dd-MM"
         }
         else {

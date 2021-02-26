@@ -25,8 +25,10 @@ class ClimaAtualViewController: UIViewController {
     var tempSen: Float = 0
     var tempMin: Float = 0
     var tempMax: Float = 0
+    var geoAPI: Bool = true
     var lat: Float = -23.53
     var lon:Float = -46.62
+    var nomeCidade: String = "São Paulo"
     
     var iconesD = [ 2: "11d:", 3: "09d", 6: "13d", 7: "50d", 50: "10d", 51: "13d", 52: "09d", 53: "09d", 800: "01d", 801: "02d", 802: "03d", 803: "04d", 804: "04d"]
     
@@ -59,24 +61,46 @@ class ClimaAtualViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         btnescalaTemp.title = "°C"
-        WeatherGeoRequest.pesquisarTempo(lat, lon) { (tempo) in
-            DispatchQueue.main.sync {
-                self.tempAtual = tempo.main?.temp ?? 1234
-                self.tempSen = tempo.main?.feels_like ?? 1234
-                self.tempMin = tempo.main?.temp_min ?? 1234
-                self.tempMax = tempo.main?.temp_max ?? 1234
-                self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
-                self.title = tempo.name ?? "Erro :("
-                self.AtualizarTemperaturas()
+        if geoAPI{
+            WeatherGeoRequest.pesquisarTempo(lat, lon) { (tempo) in
+                DispatchQueue.main.sync {
+                    self.tempAtual = tempo.main?.temp ?? 1234
+                    self.tempSen = tempo.main?.feels_like ?? 1234
+                    self.tempMin = tempo.main?.temp_min ?? 1234
+                    self.tempMax = tempo.main?.temp_max ?? 1234
+                    self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
+                    self.title = tempo.name ?? "Erro :("
+                    self.AtualizarTemperaturas()
+            
+                    guard let desc = tempo.weather?.first??.description else { return }
+                    self.lblDescrição.text = desc
+            
+                    self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
         
-                guard let desc = tempo.weather?.first??.description else { return }
-                self.lblDescrição.text = desc
-        
-                self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
-                            
+                }
             }
+        }else{
+            WeatherNameRequest.pesquisarTempo(nomeCidade) { (tempo) in
+                DispatchQueue.main.sync {
+                    self.tempAtual = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp  ?? 1234)
+                    self.tempSen = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.feels_like ?? 1234)
+                    self.tempMin = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_min ?? 1234)
+                    self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_max ?? 1234)
+                    self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
+                    self.title = tempo.name ?? "Erro :("
+                    self.AtualizarTemperaturas()
+            
+                    guard let desc = tempo.weather?.first??.description else { return }
+                    self.lblDescrição.text = desc
+            
+                    self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
+        
+                }
+            }
+            
         }
-        print("\(lat) | \(lon)")
+        
+        print("\(lat) | \(lon) | \(nomeCidade)")
     }
     
     // MARK: AtualizarTemperaturas

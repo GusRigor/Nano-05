@@ -14,6 +14,8 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     var lon: Float = 0.0
     var tLat: Float = 0.0
     var tLon : Float = 0.0
+    var geoAPI: Bool = true
+    var nomeCidade: String = ""
     var permissao: Int = 0
     var manager: CLLocationManager?
     
@@ -71,20 +73,20 @@ extension TableViewController{
             if indexPath.row == 0{
                 print("vc clicou em minha localizacao")
 //                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-                tLat = lat; tLon = lon
+                tLat = lat; tLon = lon; geoAPI = true
 //                navigationController?.pushViewController(vc, animated: true)
                 performSegue(withIdentifier: "segueCidade", sender: self)
             }else{
                 print("vc clicou em \(cidadesCoreData[indexPath.row - 1].nome!)")
 //                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-                tLat = cidadesCoreData[indexPath.row-1].lat; tLon = cidadesCoreData[indexPath.row-1].lon
+                tLat = cidadesCoreData[indexPath.row-1].lat; tLon = cidadesCoreData[indexPath.row-1].lon; geoAPI = true
 //                navigationController?.pushViewController(vc, animated: true)
                 performSegue(withIdentifier: "segueCidade", sender: self)
             }
         }else{
             print("vc clicou em \(cidadesCoreData[indexPath.row].nome!)")
 //            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-            tLat = cidadesCoreData[indexPath.row].lat; tLon = cidadesCoreData[indexPath.row].lon
+            tLat = cidadesCoreData[indexPath.row].lat; tLon = cidadesCoreData[indexPath.row].lon; geoAPI = true
 //            navigationController?.pushViewController(vc, animated: true)
             performSegue(withIdentifier: "segueCidade", sender: self)
         }
@@ -183,11 +185,14 @@ extension TableViewController{
             if searchBar.searchTextField.text!.lowercased() == cidade["nome"] as! String {
                 lat = cidade["lat"] as! Float; lon = cidade["lon"] as! Float
                 self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: lat, lon: lon, time: Date())
-                nAchou = false
+                
+                nAchou = false; geoAPI = true
             }
         }
         if nAchou {
             self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: 1, lon: 2, time: Date())
+            geoAPI = false
+            nomeCidade = searchBar.searchTextField.text!
         }
         print("You're the breathtaking")
         cidadesCoreData = appDelegate.fetchRecords()
@@ -202,5 +207,7 @@ extension TableViewController{
         let dest = segue.destination as! ClimaAtualViewController
         dest.lat = tLat
         dest.lon = tLon
+        dest.geoAPI = geoAPI
+        dest.nomeCidade = nomeCidade
     }
 }

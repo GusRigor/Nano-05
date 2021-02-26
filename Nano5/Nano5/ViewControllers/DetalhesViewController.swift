@@ -73,8 +73,8 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
     // MARK: atualizarSol
     // Converte e atualiza as labels relacionadas ao nascer e por do sol
     func atualizarSol(nasce: Int, poe: Int) {
-        self.lblNasceSol.text = "Nascer do Sol: \(Conversores.UnixParaDate(UNIX: nasce, dataCompleta: false))"
-        self.lblPorSol.text = "Pôr do Sol: \(Conversores.UnixParaDate(UNIX: poe, dataCompleta: false))"
+        self.lblNasceSol.text = "Nascer do Sol: \(Conversores.UnixParaDate(UNIX: nasce, diaMes: false))"
+        self.lblPorSol.text = "Pôr do Sol: \(Conversores.UnixParaDate(UNIX: poe, diaMes: false))"
     }
     
     // MARK: AtualizarIcone
@@ -123,7 +123,7 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
         
         if ultimaForecast != nil {
             let configData = ultimaForecast!.daily![indexPath.row]!.dt
-            cell.date.text = Conversores.UnixParaDate(UNIX: configData!, dataCompleta: true)
+            cell.date.text = Conversores.UnixParaDate(UNIX: configData!, diaMes: true)
             
             let escalaTemp = defalts.string(forKey: "escala")
             var tempMin = ultimaForecast?.daily?[indexPath.row]?.temp?.min ?? 1234

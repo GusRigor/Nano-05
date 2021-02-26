@@ -116,6 +116,4 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
         let dest = segue.destination as! DetalheArViewController
         dest.qualAr = ultimaQualAr
     }
-    
-
 }

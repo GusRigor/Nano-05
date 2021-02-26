@@ -12,6 +12,8 @@ import CoreLocation
 class TableViewController: UITableViewController, UISearchBarDelegate, CLLocationManagerDelegate{
     var lat: Float = 0.0
     var lon: Float = 0.0
+    var tLat: Float = 0.0
+    var tLon : Float = 0.0
     var permissao: Int = 0
     var manager: CLLocationManager?
     
@@ -53,7 +55,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
         }
         lat = Float(first.coordinate.latitude)
         lon = Float(first.coordinate.longitude)
-        print("\(lat) | \(lon)")
+        //print("\(lat) | \(lon)")
         permissao = 1
         CidadesTable.reloadData()
         
@@ -68,17 +70,23 @@ extension TableViewController{
         if permissao == 1{
             if indexPath.row == 0{
                 print("vc clicou em minha localizacao")
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-                navigationController?.pushViewController(vc, animated: true)
+//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
+                tLat = lat; tLon = lon
+//                navigationController?.pushViewController(vc, animated: true)
+                performSegue(withIdentifier: "segueCidade", sender: self)
             }else{
                 print("vc clicou em \(cidadesCoreData[indexPath.row - 1].nome!)")
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-                navigationController?.pushViewController(vc, animated: true)
+//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
+                tLat = cidadesCoreData[indexPath.row-1].lat; tLon = cidadesCoreData[indexPath.row-1].lon
+//                navigationController?.pushViewController(vc, animated: true)
+                performSegue(withIdentifier: "segueCidade", sender: self)
             }
         }else{
             print("vc clicou em \(cidadesCoreData[indexPath.row].nome!)")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-            navigationController?.pushViewController(vc, animated: true)
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
+            tLat = cidadesCoreData[indexPath.row].lat; tLon = cidadesCoreData[indexPath.row].lon
+//            navigationController?.pushViewController(vc, animated: true)
+            performSegue(withIdentifier: "segueCidade", sender: self)
         }
     }
     
@@ -169,9 +177,12 @@ extension TableViewController{
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         var nAchou = true
+        var lat: Float = 0.0
+        var lon : Float = 0.0
         for cidade in Cidades().cities["cidades"]!{
             if searchBar.searchTextField.text!.lowercased() == cidade["nome"] as! String {
-                self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: cidade["lat"] as! Float, lon: cidade["lon"] as! Float, time: Date())
+                lat = cidade["lat"] as! Float; lon = cidade["lon"] as! Float
+                self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: lat, lon: lon, time: Date())
                 nAchou = false
             }
         }
@@ -181,7 +192,15 @@ extension TableViewController{
         print("You're the breathtaking")
         cidadesCoreData = appDelegate.fetchRecords()
         CidadesTable.reloadData()
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-        navigationController?.pushViewController(vc, animated: true)
+        //let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
+        tLat = lat; tLon = lon
+        //navigationController?.pushViewController(vc, animated: true)
+        performSegue(withIdentifier: "segueCidade", sender: self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let dest = segue.destination as! ClimaAtualViewController
+        dest.lat = tLat
+        dest.lon = tLon
     }
 }

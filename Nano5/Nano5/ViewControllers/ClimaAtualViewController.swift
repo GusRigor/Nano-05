@@ -26,46 +26,50 @@ class ClimaAtualViewController: UIViewController {
     var tempMin: Float = 0
     var tempMax: Float = 0
     
+    let defalts = UserDefaults.standard
+    
     var iconesD = [ 2: "11d:", 3: "09d", 6: "13d", 7: "50d", 50: "10d", 51: "13d", 52: "09d", 53: "09d", 800: "01d", 801: "02d", 802: "03d", 803: "04d", 804: "04d"]
     
     var iconesN = [ 2: "11n:", 3: "09n", 6: "13n", 7: "50n", 50: "10n", 51: "13n", 52: "09n", 53: "09n", 800: "01n", 801: "02n", 802: "03n", 803: "04n", 804: "04n"]
     
     /*
     Códigos:
-     200 - 232 = 11d*
-     300 - 321 = 09d*
-     500 - 504 = 10d*
-     511       = 13d*
-     520 - 531 = 09d*
-     600 - 622 = 13d*
-     701 - 781 = 50d*
-     800       = 01d
-     801       = 02d
-     802       = 03d
-     803 - 804 = 04d
-     
+     200 - 232 = 11d / 300 - 321 = 09d / 500 - 504 = 10d / 511 = 13d / 520 - 531 = 09d; / 600 - 622 = 13d / 701 - 781 = 50d / 800 = 01d / 801       = 02d / 802       = 03d / 803 - 804 = 04d
     */
     
     // MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Como a requisição tá sendo feita pela API do FCC e ela vem com Celsius como padrão
-        
 
     }
     
+    // MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        btnescalaTemp.title = "°C"
+        if defalts.string(forKey: "escala") == nil {
+            defalts.set("°C", forKey: "escala")
+        }
+        if btnescalaTemp.title != defalts.string(forKey: "escala") {
+            btnescalaTemp.title = defalts.string(forKey: "escala")
+        }
+        
         WeatherGeoRequest.pesquisarTempo(-23.53, -46.62) { (tempo) in
             DispatchQueue.main.sync {
-                self.tempAtual = tempo.main?.temp ?? 1234
-                self.tempSen = tempo.main?.feels_like ?? 1234
-                self.tempMin = tempo.main?.temp_min ?? 1234
-                self.tempMax = tempo.main?.temp_max ?? 1234
+                if self.defalts.string(forKey: "escala") == "°F" {
+                    self.tempAtual = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp ?? 1234)
+                    self.tempSen = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.feels_like ?? 1234)
+                    self.tempMin = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp_min ?? 1234)
+                    self.tempMax = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp_max ?? 1234)
+                }
+                else {
+                    self.tempAtual = tempo.main?.temp ?? 1234
+                    self.tempSen = tempo.main?.feels_like ?? 1234
+                    self.tempMin = tempo.main?.temp_min ?? 1234
+                    self.tempMax = tempo.main?.temp_max ?? 1234
+                }
                 self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
                 self.title = tempo.name ?? "Erro :("
-                self.AtualizarTemperaturas()
+                self.AtualizarLabels()
         
                 guard let desc = tempo.weather?.first??.description else { return }
                 self.lblDescrição.text = desc
@@ -74,11 +78,32 @@ class ClimaAtualViewController: UIViewController {
                             
             }
         }
+        
     }
+    
+    // MARK: atualizarTemperaturas
+    // Converte as temperaturas entre Celsius e Fahrenheit
+    func atualizarTemperaturas(){
+        if btnescalaTemp.title == "°C" {
+            tempAtual = Conversores.CelsiusParaFahrenheit(TempCelsius: tempAtual)
+            tempMin = Conversores.CelsiusParaFahrenheit(TempCelsius: tempMin)
+            tempMax = Conversores.CelsiusParaFahrenheit(TempCelsius: tempMax)
+            tempSen = Conversores.CelsiusParaFahrenheit(TempCelsius: tempSen)
+            AtualizarLabels()
+        }
+        else {
+            tempAtual = Conversores.FahrenheitParaCelsius(TempFahr: tempAtual)
+            tempMin = Conversores.FahrenheitParaCelsius(TempFahr: tempMin)
+            tempMax = Conversores.FahrenheitParaCelsius(TempFahr: tempMax)
+            tempSen = Conversores.FahrenheitParaCelsius(TempFahr: tempSen)
+            AtualizarLabels()
+        }
+    }
+    
     
     // MARK: AtualizarTemperaturas
     // Função para atualizar a temperatura das labels
-    func AtualizarTemperaturas(){
+    func AtualizarLabels(){
         self.lblTempAtual.text = "\(Int(tempAtual))°"
         self.lblSensacao.text = "Sensação: \(Int(tempSen))°"
         self.lblTempMin.text = "Mín: \(Int(tempMin))°"
@@ -110,24 +135,14 @@ class ClimaAtualViewController: UIViewController {
     // Função de mudança de temperatura entre °C e °F, a partir do clique no item da navigationBar
     @IBAction func toggleTemp(_ sender: Any) {
         if btnescalaTemp.title == "°C" {
-            btnescalaTemp.title = "°F"
-            tempAtual = Conversores.CelsiusParaFahrenheit(TempCelsius: tempAtual)
-            tempMin = Conversores.CelsiusParaFahrenheit(TempCelsius: tempMin)
-            tempMax = Conversores.CelsiusParaFahrenheit(TempCelsius: tempMax)
-            tempSen = Conversores.CelsiusParaFahrenheit(TempCelsius: tempSen)
-            AtualizarTemperaturas()
+            defalts.set("°F", forKey: "escala")
         }
         else {
-            btnescalaTemp.title = "°C"
-            tempAtual = Conversores.FahrenheitParaCelsius(TempFahr: tempAtual)
-            tempMin = Conversores.FahrenheitParaCelsius(TempFahr: tempMin)
-            tempMax = Conversores.FahrenheitParaCelsius(TempFahr: tempMax)
-            tempSen = Conversores.FahrenheitParaCelsius(TempFahr: tempSen)
-            AtualizarTemperaturas()
+            defalts.set("°C", forKey: "escala")
         }
+        atualizarTemperaturas()
+        btnescalaTemp.title = defalts.string(forKey: "escala")
     }
-    
-
     
     // MARK: prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

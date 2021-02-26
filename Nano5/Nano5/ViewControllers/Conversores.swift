@@ -34,9 +34,11 @@ class Conversores {
         formatador.timeZone = TimeZone(abbreviation: "GMT-03:00") // timezone do Brasil
         formatador.locale = NSLocale.current
         if dataCompleta {
-            
+            formatador.dateFormat = "dd-MM"
         }
-        formatador.dateFormat = "HH:mm" // formato do horário
+        else {
+            formatador.dateFormat = "HH:mm" // formato do horário
+        }
         let horaDate = formatador.string(from: date)
         return horaDate
 

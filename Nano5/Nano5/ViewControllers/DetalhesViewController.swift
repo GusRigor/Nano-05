@@ -79,6 +79,4 @@ class DetalhesViewController: UIViewController {
         let dest = segue.destination as! DetalheArViewController
         dest.qualAr = ultimaQualAr
     }
-    
-
 }

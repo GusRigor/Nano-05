@@ -25,6 +25,8 @@ class ClimaAtualViewController: UIViewController {
     var tempSen: Float = 0
     var tempMin: Float = 0
     var tempMax: Float = 0
+    var lat: Float = -23.53
+    var lon:Float = -46.62
     
     var iconesD = [ 2: "11d:", 3: "09d", 6: "13d", 7: "50d", 50: "10d", 51: "13d", 52: "09d", 53: "09d", 800: "01d", 801: "02d", 802: "03d", 803: "04d", 804: "04d"]
     
@@ -52,7 +54,7 @@ class ClimaAtualViewController: UIViewController {
         
         // Como a requisição tá sendo feita pela API do FCC e ela vem com Celsius como padrão
         btnescalaTemp.title = "°C"
-        WeatherGeoRequest.pesquisarTempo(-23.53, -46.62) { (tempo) in
+        WeatherGeoRequest.pesquisarTempo(lat, lon) { (tempo) in
             DispatchQueue.main.sync {
                 self.tempAtual = tempo.main?.temp ?? 1234
                 self.tempSen = tempo.main?.feels_like ?? 1234
@@ -69,7 +71,7 @@ class ClimaAtualViewController: UIViewController {
                
             }
         }
-        
+        print("\(lat) | \(lon)")
     }
     
     // MARK: AtualizarTemperaturas

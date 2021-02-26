@@ -24,6 +24,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     
     var city = Cidades().recebe()
     var cidadesCoreData = [Cidade]()
+    var cidadeTelaSeguinte: Cidade?
     @IBOutlet weak var PesquisarCidade: UISearchBar!
     var filtro: [Cidade]!
     
@@ -199,6 +200,7 @@ extension TableViewController{
         CidadesTable.reloadData()
         //let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
         tLat = lat; tLon = lon
+        cidadeTelaSeguinte = nAchou ? cidadesCoreData[cidadesCoreData.count-1] : nil
         //navigationController?.pushViewController(vc, animated: true)
         performSegue(withIdentifier: "segueCidade", sender: self)
     }
@@ -209,5 +211,6 @@ extension TableViewController{
         dest.lon = tLon
         dest.geoAPI = geoAPI
         dest.nomeCidade = nomeCidade
+        dest.cidadeCoreData = cidadeTelaSeguinte
     }
 }

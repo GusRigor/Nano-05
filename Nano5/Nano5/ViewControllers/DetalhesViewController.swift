@@ -9,8 +9,13 @@ import UIKit
 
 class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
    
+    
+    
    //MARK: Variáveis e constantes
     var temp = ""
+    var lat: Float = -23.53
+    var lon: Float = -46.62
+    
     var ultimaQualAr: AirQuality?
     var ultimaForecast: WeatherForecast?
     var iconesD = [ 2: "11d:", 3: "09d", 6: "13d", 7: "50d", 50: "10d", 51: "13d", 52: "09d", 53: "09d", 800: "01d", 801: "02d", 802: "03d", 803: "04d", 804: "04d"]
@@ -35,7 +40,7 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
 
     // MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        WeatherForecastRequest.pesquisarTempo(-23.53, -46.62) { (tempo) in
+        WeatherForecastRequest.pesquisarTempo(lat, lon) { (tempo) in
             DispatchQueue.main.sync {
                 self.ultimaForecast = tempo
                 self.lblUmidade.text = "Umidade: \(String(tempo.current?.humidity ?? 1234))%"
@@ -49,7 +54,7 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
 
         setTemperatura()
 
-        AirRequest.pesquisarQualidadeAr(-23.53, -46.62) { (Ar) in
+        AirRequest.pesquisarQualidadeAr(lat, lon) { (Ar) in
             DispatchQueue.main.sync {
                 self.ultimaQualAr = Ar
                 self.lblQualAr.text = "Qualidade do ar: \(self.qualidadeAr(indice: Ar.list?.first??.main?.aqi ?? 0))"

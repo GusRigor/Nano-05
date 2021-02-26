@@ -178,6 +178,8 @@ class ClimaAtualViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let dest = segue.destination as! DetalhesViewController
         dest.temp = btnescalaTemp.title!
+        dest.lat = lat
+        dest.lon = lon
     }
     
 

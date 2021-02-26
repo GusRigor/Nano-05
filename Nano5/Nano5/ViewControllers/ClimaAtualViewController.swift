@@ -95,7 +95,7 @@ class ClimaAtualViewController: UIViewController {
                     self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_max ?? 1234)
                     self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
                     self.title = tempo.name ?? "Erro :("
-                    self.AtualizarTemperaturas()
+                    self.AtualizarLabels()
             
                     guard let desc = tempo.weather?.first??.description else { return }
                     self.lblDescrição.text = desc

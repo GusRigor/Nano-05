@@ -36,6 +36,8 @@ class ClimaAtualViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var cidadeCoreData: Cidade?
     
+    var oneCall: WeatherForecast?
+    
     var iconesD = [ 2: "11d:", 3: "09d", 6: "13d", 7: "50d", 50: "10d", 51: "13d", 52: "09d", 53: "09d", 800: "01d", 801: "02d", 802: "03d", 803: "04d", 804: "04d"]
     
     var iconesN = [ 2: "11n:", 3: "09n", 6: "13n", 7: "50n", 50: "10n", 51: "13n", 52: "09n", 53: "09n", 800: "01n", 801: "02n", 802: "03n", 803: "04n", 804: "04n"]
@@ -62,31 +64,62 @@ class ClimaAtualViewController: UIViewController {
         }
       
         if geoAPI{
-            WeatherGeoRequest.pesquisarTempo(lat, lon) { (tempo) in
-                DispatchQueue.main.sync {
-                    if self.defalts.string(forKey: "escala") == "°F" {
-                        self.tempAtual = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp ?? 1234)
-                        self.tempSen = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.feels_like ?? 1234)
-                        self.tempMin = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp_min ?? 1234)
-                        self.tempMax = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp_max ?? 1234)
+//            WeatherGeoRequest.pesquisarTempo(lat, lon) { (tempo) in
+//                DispatchQueue.main.sync {
+//                    if self.defalts.string(forKey: "escala") == "°F" {
+//                        self.tempAtual = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp ?? 1234)
+//                        self.tempSen = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.feels_like ?? 1234)
+//                        self.tempMin = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp_min ?? 1234)
+//                        self.tempMax = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp_max ?? 1234)
+//                    }
+//                    else {
+//                        self.tempAtual = tempo.main?.temp ?? 1234
+//                        self.tempSen = tempo.main?.feels_like ?? 1234
+//                        self.tempMin = tempo.main?.temp_min ?? 1234
+//                        self.tempMax = tempo.main?.temp_max ?? 1234
+//                    }
+//                    self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
+//                    self.title = tempo.name ?? "Erro :("
+//                    self.AtualizarLabels()
+//                    guard let desc = tempo.weather?.first??.description else { return }
+//                    self.lblDescrição.text = desc
+//
+//                    self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
+//
+//                    self.lblDica.text = Dicas.gerarDica(tempo: tempo)
+//
+//                }
+//            }
+            if oneCall == nil{
+                WeatherForecastRequest.pesquisarTempo(lat, lon) { (tempo) in
+                    DispatchQueue.main.sync {
+                        if self.defalts.string(forKey: "escala") == "°F" {
+                            self.tempAtual = Conversores.kelvinParaFahrenheit(TempKelvin: tempo.current?.temp ?? 1234)
+                            self.tempSen = Conversores.kelvinParaFahrenheit(TempKelvin: tempo.current?.feels_like ?? 1234)
+                            self.tempMin = Conversores.kelvinParaFahrenheit(TempKelvin: tempo.daily?.first??.temp?.min ?? 1234)
+                            self.tempMax = Conversores.kelvinParaFahrenheit(TempKelvin: tempo.daily?.first??.temp?.max ?? 1234)
+                        }
+                        else {
+                            self.tempAtual = Conversores.kelvinParaCelsius(TempKelvin: tempo.current?.temp ?? 1234)
+                            self.tempSen = Conversores.kelvinParaCelsius(TempKelvin: tempo.current?.feels_like ?? 1234)
+                            self.tempMin = Conversores.kelvinParaCelsius(TempKelvin: tempo.daily?.first??.temp?.min ?? 1234)
+                            self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.daily?.first??.temp?.max ?? 1234)
+                        }
+                        self.lblDica.text = Dicas.gerarDica(tempo: tempo)
+                        self.title = self.nomeCidade
+                        self.AtualizarLabels()
+                        guard let desc = tempo.current?.weather?.first??.description else { return }
+                        self.lblDescrição.text = desc
+                        
+                        self.AtualizarIcone(Cod: tempo.current?.weather?.first??.id ?? 800, dt: (tempo.current?.dt)!)
+                        self.oneCall = tempo
                     }
-                    else {
-                        self.tempAtual = tempo.main?.temp ?? 1234
-                        self.tempSen = tempo.main?.feels_like ?? 1234
-                        self.tempMin = tempo.main?.temp_min ?? 1234
-                        self.tempMax = tempo.main?.temp_max ?? 1234
-                    }
-                    self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
-                    self.title = tempo.name ?? "Erro :("
-                    self.AtualizarLabels()
-                    guard let desc = tempo.weather?.first??.description else { return }
-                    self.lblDescrição.text = desc
-            
-                    self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
+
                     
-                    if(tempo.name != "Shuzenji"){
-                        self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: tempo.name ?? "Erro :(", lat: tempo.coord?.lat ?? 1, lon: tempo.coord?.lon ?? 2, temp: tempo.main?.temp  ?? 0.0)
-                    }
+//                    if(tempo.name != "Shuzenji"){
+//                        self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: tempo.name ?? "Erro :(", lat: tempo.coord?.lat ?? 1, lon: tempo.coord?.lon ?? 2, temp: tempo.main?.temp  ?? 0.0)
+//                    }
+
                 }
             }
         }else{
@@ -96,14 +129,15 @@ class ClimaAtualViewController: UIViewController {
                     self.tempSen = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.feels_like ?? 1234)
                     self.tempMin = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_min ?? 1234)
                     self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_max ?? 1234)
-                    self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
-                    self.title = tempo.name ?? "Erro :("
+                    self.lblDica.text = Dicas.gerarDica(tempo: tempo)
+                    self.title = self.nomeCidade
                     self.AtualizarLabels()
             
                     guard let desc = tempo.weather?.first??.description else { return }
                     self.lblDescrição.text = desc
             
                     self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
+
                     self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: tempo.name ?? "Erro :(", lat: tempo.coord?.lat ?? 1, lon: tempo.coord?.lon ?? 2, temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp  ?? 273.0))
         
                 }
@@ -112,6 +146,9 @@ class ClimaAtualViewController: UIViewController {
         }
         
         print("\(lat) | \(lon) | \(nomeCidade)")
+        
+
+        
     }
     
     // MARK: atualizarTemperaturas
@@ -181,6 +218,7 @@ class ClimaAtualViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let dest = segue.destination as! DetalhesViewController
         dest.temp = btnescalaTemp.title!
+        dest.ultimaForecast = oneCall
         dest.lat = lat
         dest.lon = lon
     }

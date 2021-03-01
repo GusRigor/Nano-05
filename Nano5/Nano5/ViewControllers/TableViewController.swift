@@ -202,30 +202,42 @@ extension TableViewController{
         var nAchou = true
         var lat: Float = 0.0
         var lon : Float = 0.0
+        
+        //Verifica se a cidade procurada está entre as cidades salvas
         for cidade in Cidades().cities["cidades"]!{
             if searchBar.searchTextField.text!.lowercased() == cidade["nome"] as! String {
                 lat = cidade["lat"] as! Float; lon = cidade["lon"] as! Float
                 self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: lat, lon: lon, time: Date())
-                
+                nomeCidade = cidade["nome"] as! String
                 nAchou = false; geoAPI = true
+                print("Achou")
             }
         }
+        
+        
         if nAchou {
             self.appDelegate.insertRecord(nome: searchBar.searchTextField.text!, lat: 1, lon: 2, time: Date())
             geoAPI = false
             nomeCidade = searchBar.searchTextField.text!
         }
-        print("You're the breathtaking")
+        //print("You're the breathtaking")
+        
         cidadesCoreData = appDelegate.fetchRecords()
         CidadesTable.reloadData()
         tLat = lat; tLon = lon
+        
+        
         if permissao == 1{
-            cidadeTelaSeguinte = nAchou ? cidadesCoreData[cidadesCoreData.count-1] : nil
+            cidadeTelaSeguinte = cidadesCoreData[cidadesCoreData.count-1]
+            print(cidadeTelaSeguinte)
         }else{
-            cidadeTelaSeguinte = nAchou ? cidadesCoreData[cidadesCoreData.count] : nil
+            cidadeTelaSeguinte = cidadesCoreData[cidadesCoreData.count]
         }
+        
+        
         PesquisarCidade.endEditing(true)
         PesquisarCidade.text = ""
+        
         performSegue(withIdentifier: "segueCidade", sender: self)
     }
 

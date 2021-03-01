@@ -65,32 +65,6 @@ class ClimaAtualViewController: UIViewController {
         }
       
         if geoAPI{
-//            WeatherGeoRequest.pesquisarTempo(lat, lon) { (tempo) in
-//                DispatchQueue.main.sync {
-//                    if self.defalts.string(forKey: "escala") == "°F" {
-//                        self.tempAtual = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp ?? 1234)
-//                        self.tempSen = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.feels_like ?? 1234)
-//                        self.tempMin = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp_min ?? 1234)
-//                        self.tempMax = Conversores.CelsiusParaFahrenheit(TempCelsius: tempo.main?.temp_max ?? 1234)
-//                    }
-//                    else {
-//                        self.tempAtual = tempo.main?.temp ?? 1234
-//                        self.tempSen = tempo.main?.feels_like ?? 1234
-//                        self.tempMin = tempo.main?.temp_min ?? 1234
-//                        self.tempMax = tempo.main?.temp_max ?? 1234
-//                    }
-//                    self.lblDica.text = "Isso é uma dica muito útil pra esse tempo :)"
-//                    self.title = tempo.name ?? "Erro :("
-//                    self.AtualizarLabels()
-//                    guard let desc = tempo.weather?.first??.description else { return }
-//                    self.lblDescrição.text = desc
-//
-//                    self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
-//
-//                    self.lblDica.text = Dicas.gerarDica(tempo: tempo)
-//
-//                }
-//            }
             if oneCall == nil{
                 WeatherForecastRequest.pesquisarTempo(lat, lon) { (tempo) in
                     DispatchQueue.main.sync {
@@ -114,10 +88,11 @@ class ClimaAtualViewController: UIViewController {
                         
                         self.AtualizarIcone(Cod: tempo.current?.weather?.first??.id ?? 800, dt: (tempo.current?.dt)!)
                         self.oneCall = tempo
+                    
                         if !self.mLocalizacao{
-                            self.title = self.cidadeCoreData!.nome ?? "Erro :("
+                            //self.title = self.cidadeCoreData!.nome ?? "Erro :("
                             
-                            self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: self.cidadeCoreData!.nome ?? "Erro :(", lat: self.cidadeCoreData!.lat, lon: self.cidadeCoreData!.lon, temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.current?.temp ?? 1234))
+                           self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: self.cidadeCoreData!.nome ?? "Erro :(", lat: self.cidadeCoreData!.lat, lon: self.cidadeCoreData!.lon, temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.current?.temp ?? 1234))
                         }
                     }
 
@@ -127,7 +102,9 @@ class ClimaAtualViewController: UIViewController {
 //                    }
 
                 }
+                print("Passou dentro")
             }
+            print("Passou Fora")
         }else{
             WeatherNameRequest.pesquisarTempo(nomeCidade) { (tempo) in
                 DispatchQueue.main.sync {

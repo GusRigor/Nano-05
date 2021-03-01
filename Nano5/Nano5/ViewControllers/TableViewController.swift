@@ -71,17 +71,16 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
                 }
             }
         }
-        if(filtro.count > 1){
-            for chave in 1...filtro.count{
-                print("\(filtro[chave - 1].lat) | \(filtro[chave - 1].lon)")
-                WeatherGeoRequest.pesquisarTempo(filtro[chave - 1].lat, filtro[chave - 1].lon) { (tempo) in
-                    DispatchQueue.main.sync {
-                        self.temperaturas[chave] = Double(tempo.main?.temp ?? 0)
-                        print(tempo.main?.temp ?? 0)
-                        print(tempo.sys?.country as Any)
-                        self.CidadesTable.reloadData()
-                        print(chave)
-                    }
+        for chave in filtro {
+            print("\(chave.lat) | \(chave.lon)")
+            WeatherGeoRequest.pesquisarTempo(chave.lat, chave.lon) { (tempo) in
+                DispatchQueue.main.sync {
+                    let temp = Float(tempo.main?.temp ?? 0.0)
+                    print(tempo.main?.temp ?? 0.0)
+                    print(tempo.sys?.country as Any)
+                    self.appDelegate.updateRecord(cidade: chave, nome: chave.nome ?? "A", lat: chave.lat, lon: chave.lon, temp: temp)
+                    self.CidadesTable.reloadData()
+                    print(chave)
                 }
             }
         }
@@ -150,12 +149,12 @@ extension TableViewController{
             }else{
                 let cidade = filtro[indexPath.row - 1].nome
                 cell.NomeCidade.text = cidade
-                cell.TemperaturaCidade.text = String(format: "%.0f",temperaturas[indexPath.row] ) + "ºC"
+                cell.TemperaturaCidade.text = String(format: "%.0f",filtro[indexPath.row - 1].temp ) + "ºC"
             }
         }else{
             let cidade = filtro[indexPath.row].nome
             cell.NomeCidade.text = cidade
-            cell.TemperaturaCidade.text = String(format: "%.0f",temperaturas[indexPath.row + 1] ) + "ºC"
+            cell.TemperaturaCidade.text = String(format: "%.0f",filtro[indexPath.row].temp ) + "ºC"
         }
    
         return cell

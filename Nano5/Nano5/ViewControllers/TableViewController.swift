@@ -19,6 +19,10 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     var permissao: Int = 0
     var manager: CLLocationManager?
     
+    var temperaturas = Array(repeating: 0.0, count: 100)
+    var timer1: Timer!
+    var timer2: Timer!
+    
     @IBOutlet var CidadesTable: UITableView!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -34,6 +38,8 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
         CidadesTable.dataSource = self
         PesquisarCidade.delegate = self
         filtro = cidadesCoreData
+        
+        timer1 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(BuscaTemp), userInfo: nil, repeats: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,6 +55,33 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
         manager?.requestWhenInUseAuthorization()
         manager?.startUpdatingLocation()
         
+    }
+    
+    @objc func BuscaTemp(){
+        if permissao == 1{
+            print("\(self.lat) | \(self.lon)")
+            WeatherGeoRequest.pesquisarTempo(self.lat, self.lon) { (tempo) in
+                DispatchQueue.main.sync {
+                    self.temperaturas[0] = Double(tempo.main?.temp ?? 0)
+                    print(tempo.main?.temp ?? 0)
+                    print(tempo.sys?.country as Any)
+                    self.CidadesTable.reloadData()
+                    print(0)
+                }
+            }
+        }
+        for chave in 1...filtro.count{
+            print("\(filtro[chave - 1].lat) | \(filtro[chave - 1].lon)")
+            WeatherGeoRequest.pesquisarTempo(filtro[chave - 1].lat, filtro[chave - 1].lon) { (tempo) in
+                DispatchQueue.main.sync {
+                    self.temperaturas[chave] = Double(tempo.main?.temp ?? 0)
+                    print(tempo.main?.temp ?? 0)
+                    print(tempo.sys?.country as Any)
+                    self.CidadesTable.reloadData()
+                    print(chave)
+                }
+            }
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -111,35 +144,18 @@ extension TableViewController{
         if permissao == 1{
             if indexPath.row == 0{
                 cell.NomeCidade.text = "Minha Localização"
-                WeatherGeoRequest.pesquisarTempo(lat, lon) { (tempo) in
-                    DispatchQueue.main.sync {
-                        cell.TemperaturaCidade.text = String(format: "%.0f",tempo.main?.temp ?? 0) + "ºC"
-                    }
-                }
-                print(1)
+                cell.TemperaturaCidade.text = String(format: "%.0f",temperaturas[0] ) + "ºC"
             }else{
                 let cidade = filtro[indexPath.row - 1].nome
                 cell.NomeCidade.text = cidade
-                WeatherGeoRequest.pesquisarTempo(filtro[indexPath.row - 1].lat, filtro[indexPath.row - 1].lon) { (tempo) in
-                    DispatchQueue.main.sync {
-                        cell.TemperaturaCidade.text = String(format: "%.0f",tempo.main?.temp ?? 0) + "ºC"
-                    }
-                }
+                cell.TemperaturaCidade.text = String(format: "%.0f",temperaturas[indexPath.row] ) + "ºC"
             }
         }else{
             let cidade = filtro[indexPath.row].nome
             cell.NomeCidade.text = cidade
-            WeatherGeoRequest.pesquisarTempo(filtro[indexPath.row].lat, filtro[indexPath.row].lon) { (tempo) in
-                DispatchQueue.main.sync {
-                    cell.TemperaturaCidade.text = String(format: "%.0f",tempo.main?.temp ?? 0) + "ºC"
-                }
-            }
+            cell.TemperaturaCidade.text = String(format: "%.0f",temperaturas[indexPath.row + 1] ) + "ºC"
         }
-        
-//        let temperatura = temperaturas[indexPath.row]
-//        cell.TemperaturaCidade.text = String(temperatura)
-
-        
+   
         return cell
     }
     

@@ -30,6 +30,7 @@ class ClimaAtualViewController: UIViewController {
 
     //Variáveis para guardar as informações da tela anterior
     var geoAPI: Bool = true
+    var mLocalizacao: Bool = true
     var lat: Float = -23.53
     var lon:Float = -46.62
     var nomeCidade: String = "São Paulo"
@@ -113,6 +114,11 @@ class ClimaAtualViewController: UIViewController {
                         
                         self.AtualizarIcone(Cod: tempo.current?.weather?.first??.id ?? 800, dt: (tempo.current?.dt)!)
                         self.oneCall = tempo
+                        if !self.mLocalizacao{
+                            self.title = self.cidadeCoreData!.nome ?? "Erro :("
+                            
+                            self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: self.cidadeCoreData!.nome ?? "Erro :(", lat: self.cidadeCoreData!.lat, lon: self.cidadeCoreData!.lon, temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.current?.temp ?? 1234))
+                        }
                     }
 
                     

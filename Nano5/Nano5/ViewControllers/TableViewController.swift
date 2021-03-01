@@ -15,6 +15,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     var tLat: Float = 0.0
     var tLon : Float = 0.0
     var geoAPI: Bool = true
+    var mLocalizacao: Bool = false
     var nomeCidade: String = ""
     var permissao: Int = 0
     var manager: CLLocationManager?
@@ -110,6 +111,8 @@ extension TableViewController{
                 print("vc clicou em minha localizacao")
                 tLat = lat; tLon = lon; geoAPI = true
                 PesquisarCidade.endEditing(true)
+                nomeCidade = "Minha Localização"
+                mLocalizacao = true
                 performSegue(withIdentifier: "segueCidade", sender: self)
             }else{
                 print("vc clicou em \(filtro[indexPath.row - 1].nome!)")
@@ -233,5 +236,7 @@ extension TableViewController{
         dest.geoAPI = geoAPI
         dest.nomeCidade = nomeCidade
         dest.cidadeCoreData = cidadeTelaSeguinte
+        dest.mLocalizacao = mLocalizacao
+        mLocalizacao = false
     }
 }

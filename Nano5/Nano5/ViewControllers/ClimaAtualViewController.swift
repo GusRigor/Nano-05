@@ -121,20 +121,31 @@ class ClimaAtualViewController: UIViewController {
                         }
                     }
 
-                    
-//                    if(tempo.name != "Shuzenji"){
-//                        self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: tempo.name ?? "Erro :(", lat: tempo.coord?.lat ?? 1, lon: tempo.coord?.lon ?? 2, temp: tempo.main?.temp  ?? 0.0)
-//                    }
 
                 }
+            }
+            else {
+                atualizarTemperaturas()
             }
         }else{
             WeatherNameRequest.pesquisarTempo(nomeCidade) { (tempo) in
                 DispatchQueue.main.sync {
-                    self.tempAtual = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp  ?? 1234)
-                    self.tempSen = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.feels_like ?? 1234)
-                    self.tempMin = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_min ?? 1234)
-                    self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_max ?? 1234)
+                    if self.defalts.string(forKey: "escala") == "°F" {
+                        self.tempAtual = Conversores.kelvinParaFahrenheit(TempKelvin: tempo.main?.temp ?? 1234)
+                        self.tempSen = Conversores.kelvinParaFahrenheit(TempKelvin: tempo.main?.feels_like ?? 1234)
+                        self.tempMin = Conversores.kelvinParaFahrenheit(TempKelvin: tempo.main?.temp_min ?? 1234)
+                        self.tempMax = Conversores.kelvinParaFahrenheit(TempKelvin: tempo.main?.temp_max ?? 1234)
+                    }
+                    else {
+                        self.tempAtual = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp ?? 1234)
+                        self.tempSen = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.feels_like ?? 1234)
+                        self.tempMin = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_min ?? 1234)
+                        self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_max ?? 1234)
+                    }
+//                    self.tempAtual = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp  ?? 1234)
+//                    self.tempSen = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.feels_like ?? 1234)
+//                    self.tempMin = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_min ?? 1234)
+//                    self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_max ?? 1234)
                     self.lblDica.text = Dicas.gerarDica(tempo: tempo)
                     self.title = self.nomeCidade
                     self.AtualizarLabels()
@@ -160,7 +171,7 @@ class ClimaAtualViewController: UIViewController {
     // MARK: atualizarTemperaturas
     // Converte as temperaturas entre Celsius e Fahrenheit
     func atualizarTemperaturas(){
-        if btnescalaTemp.title == "°C" {
+        if defalts.string(forKey: "escala") == "°F" {
             tempAtual = Conversores.CelsiusParaFahrenheit(TempCelsius: tempAtual)
             tempMin = Conversores.CelsiusParaFahrenheit(TempCelsius: tempMin)
             tempMax = Conversores.CelsiusParaFahrenheit(TempCelsius: tempMax)
@@ -210,7 +221,7 @@ class ClimaAtualViewController: UIViewController {
     // MARK: IBAction toggleTemp
     // Função de mudança de temperatura entre °C e °F, a partir do clique no item da navigationBar
     @IBAction func toggleTemp(_ sender: Any) {
-        if btnescalaTemp.title == "°C" {
+        if defalts.string(forKey: "escala") == "°C" {
             defalts.set("°F", forKey: "escala")
         }
         else {

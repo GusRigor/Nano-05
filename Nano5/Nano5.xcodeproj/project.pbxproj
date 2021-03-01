@@ -45,7 +45,7 @@
 		1C631A0025E57C0900667EB9 /* WeatherGeoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherGeoRequest.swift; sourceTree = "<group>"; };
 		1C631A0325E57C2300667EB9 /* WeatherForecastRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastRequest.swift; sourceTree = "<group>"; };
 		1C631A0E25E589A900667EB9 /* Cidades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cidades.swift; sourceTree = "<group>"; };
-		1C8E7F3B25E43C4D00D9C1FB /* Nano5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nano5.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C8E7F3B25E43C4D00D9C1FB /* NanoWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NanoWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C8E7F3E25E43C4D00D9C1FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1C8E7F4025E43C4D00D9C1FB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1C8E7F4225E43C4D00D9C1FB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		1C8E7F3C25E43C4D00D9C1FB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1C8E7F3B25E43C4D00D9C1FB /* Nano5.app */,
+				1C8E7F3B25E43C4D00D9C1FB /* NanoWeather.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -156,9 +156,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1C8E7F3A25E43C4D00D9C1FB /* Nano5 */ = {
+		1C8E7F3A25E43C4D00D9C1FB /* NanoWeather */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1C8E7F5225E43C4F00D9C1FB /* Build configuration list for PBXNativeTarget "Nano5" */;
+			buildConfigurationList = 1C8E7F5225E43C4F00D9C1FB /* Build configuration list for PBXNativeTarget "NanoWeather" */;
 			buildPhases = (
 				1C8E7F3725E43C4D00D9C1FB /* Sources */,
 				1C8E7F3825E43C4D00D9C1FB /* Frameworks */,
@@ -168,9 +168,9 @@
 			);
 			dependencies = (
 			);
-			name = Nano5;
+			name = NanoWeather;
 			productName = Nano5;
-			productReference = 1C8E7F3B25E43C4D00D9C1FB /* Nano5.app */;
+			productReference = 1C8E7F3B25E43C4D00D9C1FB /* NanoWeather.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -200,7 +200,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1C8E7F3A25E43C4D00D9C1FB /* Nano5 */,
+				1C8E7F3A25E43C4D00D9C1FB /* NanoWeather */,
 			);
 		};
 /* End PBXProject section */
@@ -435,7 +435,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1C8E7F5225E43C4F00D9C1FB /* Build configuration list for PBXNativeTarget "Nano5" */ = {
+		1C8E7F5225E43C4F00D9C1FB /* Build configuration list for PBXNativeTarget "NanoWeather" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1C8E7F5325E43C4F00D9C1FB /* Debug */,

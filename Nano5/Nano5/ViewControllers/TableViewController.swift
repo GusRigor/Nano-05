@@ -71,15 +71,17 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
                 }
             }
         }
-        for chave in 1...filtro.count{
-            print("\(filtro[chave - 1].lat) | \(filtro[chave - 1].lon)")
-            WeatherGeoRequest.pesquisarTempo(filtro[chave - 1].lat, filtro[chave - 1].lon) { (tempo) in
-                DispatchQueue.main.sync {
-                    self.temperaturas[chave] = Double(tempo.main?.temp ?? 0)
-                    print(tempo.main?.temp ?? 0)
-                    print(tempo.sys?.country as Any)
-                    self.CidadesTable.reloadData()
-                    print(chave)
+        if(filtro.count > 1){
+            for chave in 1...filtro.count{
+                print("\(filtro[chave - 1].lat) | \(filtro[chave - 1].lon)")
+                WeatherGeoRequest.pesquisarTempo(filtro[chave - 1].lat, filtro[chave - 1].lon) { (tempo) in
+                    DispatchQueue.main.sync {
+                        self.temperaturas[chave] = Double(tempo.main?.temp ?? 0)
+                        print(tempo.main?.temp ?? 0)
+                        print(tempo.sys?.country as Any)
+                        self.CidadesTable.reloadData()
+                        print(chave)
+                    }
                 }
             }
         }

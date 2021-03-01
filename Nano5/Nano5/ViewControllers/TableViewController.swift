@@ -40,6 +40,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
         filtro = cidadesCoreData
         
         timer1 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(BuscaTemp), userInfo: nil, repeats: false)
+        timer2 = Timer.scheduledTimer(timeInterval: 300.0, target: self, selector: #selector(BuscaTemp), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {

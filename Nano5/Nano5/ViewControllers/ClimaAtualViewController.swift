@@ -114,6 +114,12 @@ class ClimaAtualViewController: UIViewController {
                         self.AtualizarIcone(Cod: tempo.current?.weather?.first??.id ?? 800, dt: (tempo.current?.dt)!)
                         self.oneCall = tempo
                     }
+
+                    
+//                    if(tempo.name != "Shuzenji"){
+//                        self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: tempo.name ?? "Erro :(", lat: tempo.coord?.lat ?? 1, lon: tempo.coord?.lon ?? 2, temp: tempo.main?.temp  ?? 0.0)
+//                    }
+
                 }
             }
         }else{
@@ -131,8 +137,8 @@ class ClimaAtualViewController: UIViewController {
                     self.lblDescrição.text = desc
             
                     self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
-                    self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: tempo.name ?? "Erro :(", lat: tempo.coord?.lat ?? 1, lon: tempo.coord?.lon ?? 2)
-                    
+
+                    self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: tempo.name ?? "Erro :(", lat: tempo.coord?.lat ?? 1, lon: tempo.coord?.lon ?? 2, temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp  ?? 273.0))
         
                 }
             }

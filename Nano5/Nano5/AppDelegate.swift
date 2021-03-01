@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cidade.lat = lat
         cidade.lon = lon
         cidade.time = time
+        cidade.temp = 0.0
         saveContext()
     }
     
@@ -58,10 +59,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //Update
-    func updateRecord(cidade: Cidade, nome: String, lat: Float,  lon: Float){
+    func updateRecord(cidade: Cidade, nome: String, lat: Float,  lon: Float, temp: Float){
         cidade.nome = nome
         cidade.lat = lat
         cidade.lon = lon
+        cidade.temp = temp
         saveContext()
     }
     

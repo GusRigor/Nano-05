@@ -40,16 +40,25 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
 
     // MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        WeatherForecastRequest.pesquisarTempo(lat, lon) { (tempo) in
-            DispatchQueue.main.sync {
-                self.ultimaForecast = tempo
-                self.lblUmidade.text = "Umidade: \(String(tempo.current?.humidity ?? 1234))%"
-                self.lblUv.text = "Indice UV: \(String(tempo.current?.uvi ?? 1234))"
-                self.lblVento.text = "Ventos: \(String(tempo.current?.wind_speed ?? 1234))m/s"
-                self.atualizarSol(nasce: tempo.current?.sunrise ?? 0, poe: tempo.current?.sunset ?? 0)
-                self.collectPrevisao.reloadData()
+        if ultimaForecast == nil {
+            WeatherForecastRequest.pesquisarTempo(lat, lon) { (tempo) in
+                DispatchQueue.main.sync {
+                    self.ultimaForecast = tempo
+                    self.lblUmidade.text = "Umidade: \(String(tempo.current?.humidity ?? 1234))%"
+                    self.lblUv.text = "Indice UV: \(String(tempo.current?.uvi ?? 1234))"
+                    self.lblVento.text = "Ventos: \(String(tempo.current?.wind_speed ?? 1234))m/s"
+                    self.atualizarSol(nasce: tempo.current?.sunrise ?? 0, poe: tempo.current?.sunset ?? 0)
+                    self.collectPrevisao.reloadData()
 
+                }
             }
+        }
+        else {
+            self.lblUmidade.text = "Umidade: \(String(ultimaForecast?.current?.humidity ?? 1234))%"
+            self.lblUv.text = "Indice UV: \(String(ultimaForecast?.current?.uvi ?? 1234))"
+            self.lblVento.text = "Ventos: \(String(ultimaForecast?.current?.wind_speed ?? 1234))m/s"
+            self.atualizarSol(nasce: ultimaForecast?.current?.sunrise ?? 0, poe: ultimaForecast?.current?.sunset ?? 0)
+            self.collectPrevisao.reloadData()
         }
 
         setTemperatura()

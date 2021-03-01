@@ -83,7 +83,10 @@ class ClimaAtualViewController: UIViewController {
                     self.lblDescrição.text = desc
             
                     self.AtualizarIcone(Cod: tempo.weather?.first??.id ?? 800, dt: tempo.dt!)
-        
+                    
+                    if(tempo.name != "Shuzenji"){
+                        self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: tempo.name ?? "Erro :(", lat: tempo.coord?.lat ?? 1, lon: tempo.coord?.lon ?? 2, temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp  ?? 273.0))
+                    }
                 }
             }
         }else{

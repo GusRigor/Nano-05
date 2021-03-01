@@ -109,24 +109,20 @@ extension TableViewController{
         if permissao == 1{
             if indexPath.row == 0{
                 print("vc clicou em minha localizacao")
-//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
                 tLat = lat; tLon = lon; geoAPI = true
-//                navigationController?.pushViewController(vc, animated: true)
                 PesquisarCidade.endEditing(true)
                 performSegue(withIdentifier: "segueCidade", sender: self)
             }else{
-                print("vc clicou em \(cidadesCoreData[indexPath.row - 1].nome!)")
-//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-                tLat = cidadesCoreData[indexPath.row-1].lat; tLon = cidadesCoreData[indexPath.row-1].lon; geoAPI = true
-//                navigationController?.pushViewController(vc, animated: true)
+                print("vc clicou em \(filtro[indexPath.row - 1].nome!)")
+                tLat = filtro[indexPath.row-1].lat; tLon = filtro[indexPath.row-1].lon; geoAPI = true
+                cidadeTelaSeguinte = filtro[indexPath.row-1]
                 PesquisarCidade.endEditing(true)
                 performSegue(withIdentifier: "segueCidade", sender: self)
             }
         }else{
-            print("vc clicou em \(cidadesCoreData[indexPath.row].nome!)")
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
-            tLat = cidadesCoreData[indexPath.row].lat; tLon = cidadesCoreData[indexPath.row].lon; geoAPI = true
-//            navigationController?.pushViewController(vc, animated: true)
+            print("vc clicou em \(filtro[indexPath.row].nome!)")
+            tLat = filtro[indexPath.row].lat; tLon = filtro[indexPath.row].lon; geoAPI = true
+            cidadeTelaSeguinte = filtro[indexPath.row]
             PesquisarCidade.endEditing(true)
             performSegue(withIdentifier: "segueCidade", sender: self)
         }
@@ -220,12 +216,14 @@ extension TableViewController{
         print("You're the breathtaking")
         cidadesCoreData = appDelegate.fetchRecords()
         CidadesTable.reloadData()
-        //let vc = self.storyboard?.instantiateViewController(withIdentifier: "ClimaAtualViewController") as! ClimaAtualViewController
         tLat = lat; tLon = lon
-        cidadeTelaSeguinte = nAchou ? cidadesCoreData[cidadesCoreData.count-1] : nil
+        if permissao == 1{
+            cidadeTelaSeguinte = nAchou ? cidadesCoreData[cidadesCoreData.count-1] : nil
+        }else{
+            cidadeTelaSeguinte = nAchou ? cidadesCoreData[cidadesCoreData.count] : nil
+        }
         PesquisarCidade.endEditing(true)
         PesquisarCidade.text = ""
-        //navigationController?.pushViewController(vc, animated: true)
         performSegue(withIdentifier: "segueCidade", sender: self)
     }
 

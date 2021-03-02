@@ -34,6 +34,7 @@ class ClimaAtualViewController: UIViewController {
     var lat: Float = -23.53
     var lon:Float = -46.62
     var nomeCidade: String = "São Paulo"
+    var tempMinhaLocalizacao: TempMinhaLocalizacao!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var cidadeCoreData: Cidade?
     
@@ -89,6 +90,8 @@ class ClimaAtualViewController: UIViewController {
                         if !self.mLocalizacao{
                             
                            self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: self.cidadeCoreData!.nome ?? "Erro :(", lat: self.cidadeCoreData!.lat, lon: self.cidadeCoreData!.lon, temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.current?.temp ?? 1234))
+                        }else{
+                            self.tempMinhaLocalizacao.Atualizar(temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.current?.temp ?? 1234))
                         }
                     }
 

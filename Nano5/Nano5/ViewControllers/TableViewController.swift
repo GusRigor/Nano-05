@@ -20,7 +20,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     var permissao: Int = 0
     var manager: CLLocationManager?
     
-    var temperaturas = Array(repeating: 0.0, count: 100)
+    var tempMiLocalizacao: Float = 0.0
     var timer1: Timer!
     var timer2: Timer!
     
@@ -64,7 +64,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
             print("\(self.lat) | \(self.lon)")
             WeatherGeoRequest.pesquisarTempo(self.lat, self.lon) { (tempo) in
                 DispatchQueue.main.sync {
-                    self.temperaturas[0] = Double(tempo.main?.temp ?? 0)
+                    self.tempMiLocalizacao = Float(tempo.main?.temp ?? 0)
                     print(tempo.main?.temp ?? 0)
                     print(tempo.sys?.country as Any)
                     self.CidadesTable.reloadData()
@@ -150,7 +150,7 @@ extension TableViewController{
         if permissao == 1{
             if indexPath.row == 0{
                 cell.NomeCidade.text = "Minha Localização"
-                cell.TemperaturaCidade.text = String(format: "%.0f",temperaturas[0] ) + "ºC"
+                cell.TemperaturaCidade.text = String(format: "%.0f",tempMiLocalizacao) + "ºC"
             }else{
                 let cidade = filtro[indexPath.row - 1].nome
                 cell.NomeCidade.text = cidade
@@ -231,7 +231,7 @@ extension TableViewController{
         
         if permissao == 1{
             cidadeTelaSeguinte = cidadesCoreData[cidadesCoreData.count-1]
-            print(cidadeTelaSeguinte)
+            //print(cidadeTelaSeguinte)
         }else{
             cidadeTelaSeguinte = cidadesCoreData[cidadesCoreData.count]
         }
@@ -245,6 +245,7 @@ extension TableViewController{
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let dest = segue.destination as! ClimaAtualViewController
+        dest.tempMinhaLocalizacao = self
         dest.lat = tLat
         dest.lon = tLon
         dest.geoAPI = geoAPI
@@ -253,4 +254,12 @@ extension TableViewController{
         dest.mLocalizacao = mLocalizacao
         mLocalizacao = false
     }
+}
+
+extension TableViewController: TempMinhaLocalizacao{
+    func Atualizar(temp: Float) {
+        tempMiLocalizacao = temp
+    }
+    
+    
 }

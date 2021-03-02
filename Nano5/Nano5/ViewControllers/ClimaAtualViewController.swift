@@ -164,9 +164,13 @@ class ClimaAtualViewController: UIViewController {
     // Função para atualizar a temperatura das labels
     func AtualizarLabels(){
         self.lblTempAtual.text = "\(Int(tempAtual))°"
+        self.lblTempAtual.accessibilityLabel = "\(Int(tempAtual))°"
         self.lblSensacao.text = "Sensação: \(Int(tempSen))°"
+        self.lblSensacao.accessibilityLabel = "Sensação: \(Int(tempSen))°"
         self.lblTempMin.text = "Mín: \(Int(tempMin))°"
-        self.lblTempMax.text = "Max: \(Int(tempMax))°"
+        self.lblTempMin.accessibilityLabel = "Mínima: \(Int(tempMin))°"
+        self.lblTempMax.text = "Máx: \(Int(tempMax))°"
+        self.lblTempMax.accessibilityLabel = "Máxima: \(Int(tempMax))°"
     }
     
     // MARK: AtualizarIcone

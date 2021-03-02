@@ -23,6 +23,18 @@ class DetalheArViewController: UIViewController {
     @IBOutlet weak var lblDicaAr: UILabel!
     @IBOutlet weak var lblQualidade: UILabel!
     
+    
+    @IBOutlet weak var lblInfoCO: UILabel!
+    @IBOutlet weak var lblInfoNO: UILabel!
+    @IBOutlet weak var lblInfoNO2: UILabel!
+    @IBOutlet weak var lblInfoO3: UILabel!
+    @IBOutlet weak var lblInfoSO2: UILabel!
+    @IBOutlet weak var lblInfoPM2_5: UILabel!
+    @IBOutlet weak var lblInfoPM10: UILabel!
+    @IBOutlet weak var lblInfoNH3: UILabel!
+    
+    
+    
     // MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +52,7 @@ class DetalheArViewController: UIViewController {
         lblPM2_5.text = "PM₂₅: \(String(qualAr?.list?.first??.components?.pm2_5 ?? 1234)) μg/m³"
         lblPM10.text = "PM₁₀: \(String(qualAr?.list?.first??.components?.pm10 ?? 1234)) μg/m³"
         lblNH3.text = "NH₃: \(String(qualAr?.list?.first??.components?.nh3 ?? 1234)) μg/m³"
+        
         
         switch qualAr?.list?.first??.main?.aqi {
         case 1:
@@ -66,13 +79,34 @@ class DetalheArViewController: UIViewController {
             print("foi pro default e deu errado")
             break
         }
-        print(view.frame.size.height)
-        if view.frame.size.height < 630 {
-            
-        }
+        setAcessibilidade()
+        
         
         
     }
+    
+    
+    func setAcessibilidade(){
+        lblQualidade.accessibilityLabel = lblQualidade.text
+        lblDicaAr.accessibilityLabel = lblDicaAr.text
+        lblCO.accessibilityLabel = "Monóxido de carbono: \(String(qualAr?.list?.first??.components?.co ?? 1234)) microgramas por metro cúbico."
+        lblInfoCO.accessibilityLabel = "A quantidade ideal de monóxido de carbono é abaixo de 230 microgramas por metro cúbico."
+        lblNO.accessibilityLabel = "monóxido de nitrogênio: \(String(qualAr?.list?.first??.components?.no ?? 1234)) microgramas por metro cúbico."
+        lblInfoNO.accessibilityLabel = "A quantidade ideal de monóxido de nitrogênio é abaixo de 30 microgramas por metro cúbico."
+        lblNO2.accessibilityLabel = "dióxido de nitrogênio: \(String(qualAr?.list?.first??.components?.no2 ?? 1234)) microgramas por metro cúbico."
+        lblInfoNO2.accessibilityLabel = "A quantidade ideal de dióxido de nitrogênio é abaixo de 240 microgramas por metro cúbico."
+        lblO3.accessibilityLabel = "ozônio: \(String(qualAr?.list?.first??.components?.o3 ?? 1234)) microgramas por metro cúbico."
+        lblInfoO3.accessibilityLabel = "A quantidade ideal de ozônio é abaixo de 100 microgramas por metro cúbico."
+        lblSO2.accessibilityLabel = "dióxido de enxofre: \(String(qualAr?.list?.first??.components?.so2 ?? 1234)) microgramas por metro cúbico"
+        lblInfoSO2.accessibilityLabel = "A quantidade ideal de dióxido de enxofre é abaixo de 30 microgramas por metro cúbico."
+        lblPM2_5.accessibilityLabel = "partículas inaláveis finas: \(String(qualAr?.list?.first??.components?.pm2_5 ?? 1234)) microgramas por metro cúbico"
+        lblInfoPM2_5.accessibilityLabel = "A quantidade ideal de partículas inaláveis finas é abaixo de 40 microgramas por metro cúbico."
+        lblPM10.accessibilityLabel = "partículas inaláveis: \(String(qualAr?.list?.first??.components?.pm10 ?? 1234)) microgramas por metro cúbico"
+        lblInfoPM10.accessibilityLabel = "A quantidade ideal de partículas inaláveis é abaixo de 100 microgramas por metro cúbico."
+        lblNH3.accessibilityLabel = "amônia: \(String(qualAr?.list?.first??.components?.nh3 ?? 1234)) microgramas por metro cúbico"
+        lblInfoNH3.accessibilityLabel = "A quantidade ideal de amônia é abaixo de 18 microgramas por metro cúbico."
+    }
+    
     
     // MARK: IBAction fechar
     @IBAction func fechar(_ sender: Any) {

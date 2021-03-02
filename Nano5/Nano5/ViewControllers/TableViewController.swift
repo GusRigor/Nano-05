@@ -151,15 +151,24 @@ extension TableViewController{
             if indexPath.row == 0{
                 cell.NomeCidade.text = "Minha Localização"
                 cell.TemperaturaCidade.text = String(format: "%.0f",tempMiLocalizacao) + "ºC"
+                cell.isAccessibilityElement = true
+                cell.accessibilityLabel = "Minha localização, \(String(format: "%.0f",tempMiLocalizacao)) graus celsius"
+                cell.accessibilityHint = "Aperte duas vezes para mais informações sobre o tempo nesse local"
             }else{
                 let cidade = filtro[indexPath.row - 1].nome
                 cell.NomeCidade.text = cidade
                 cell.TemperaturaCidade.text = String(format: "%.0f",filtro[indexPath.row - 1].temp ) + "ºC"
+                cell.isAccessibilityElement = true
+                cell.accessibilityLabel = "\(cidade ?? "A"), \(String(format: "%.0f",filtro[indexPath.row - 1].temp)) graus celsius"
+                cell.accessibilityHint = "Aperte duas vezes para mais informações sobre o tempo nesse local"
             }
         }else{
             let cidade = filtro[indexPath.row].nome
             cell.NomeCidade.text = cidade
             cell.TemperaturaCidade.text = String(format: "%.0f",filtro[indexPath.row].temp ) + "ºC"
+            cell.isAccessibilityElement = true
+            cell.accessibilityLabel = "\(cidade ?? "A"), \(String(format: "%.0f",filtro[indexPath.row].temp)) graus celsius"
+            cell.accessibilityHint = "Aperte duas vezes para mais informações sobre o tempo nesse local"
         }
    
         return cell

@@ -60,9 +60,6 @@ class ClimaAtualViewController: UIViewController {
         if defalts.string(forKey: "escala") == nil {
             defalts.set("°C", forKey: "escala")
         }
-        if btnescalaTemp.title != defalts.string(forKey: "escala") {
-            btnescalaTemp.title = defalts.string(forKey: "escala")
-        }
       
         if geoAPI{
             if oneCall == nil{
@@ -90,7 +87,6 @@ class ClimaAtualViewController: UIViewController {
                         self.oneCall = tempo
                     
                         if !self.mLocalizacao{
-                            //self.title = self.cidadeCoreData!.nome ?? "Erro :("
                             
                            self.appDelegate.updateRecord(cidade: self.cidadeCoreData!, nome: self.cidadeCoreData!.nome ?? "Erro :(", lat: self.cidadeCoreData!.lat, lon: self.cidadeCoreData!.lon, temp: Conversores.kelvinParaCelsius(TempKelvin: tempo.current?.temp ?? 1234))
                         }
@@ -100,7 +96,8 @@ class ClimaAtualViewController: UIViewController {
                 }
 
             }
-            else{
+            if btnescalaTemp.title != defalts.string(forKey: "escala") {
+                btnescalaTemp.title = defalts.string(forKey: "escala")
                 atualizarTemperaturas()
             }
         }else{
@@ -118,10 +115,6 @@ class ClimaAtualViewController: UIViewController {
                         self.tempMin = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_min ?? 1234)
                         self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_max ?? 1234)
                     }
-//                    self.tempAtual = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp  ?? 1234)
-//                    self.tempSen = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.feels_like ?? 1234)
-//                    self.tempMin = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_min ?? 1234)
-//                    self.tempMax = Conversores.kelvinParaCelsius(TempKelvin: tempo.main?.temp_max ?? 1234)
                     self.lblDica.text = Dicas.gerarDica(tempo: tempo)
                     self.title = self.nomeCidade
                     self.AtualizarLabels()

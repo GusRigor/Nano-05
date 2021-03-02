@@ -233,9 +233,15 @@ extension TableViewController{
             }
             
             if permissao == 1{
-                cidadeTelaSeguinte = cidadesCoreData[cidadesCoreData.count-1]
-                //print(cidadeTelaSeguinte)
+                if cidadesCoreData.count == 0 {
+                    cidadesCoreData = appDelegate.fetchRecords()
+                    cidadeTelaSeguinte = cidadesCoreData[0]
+                }else{
+                    cidadeTelaSeguinte = cidadesCoreData[cidadesCoreData.count-1]
+                }
+                
             }else{
+                
                 cidadeTelaSeguinte = cidadesCoreData[cidadesCoreData.count]
             }
         }

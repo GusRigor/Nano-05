@@ -119,6 +119,7 @@ extension TableViewController{
                 tLat = filtro[indexPath.row-1].lat; tLon = filtro[indexPath.row-1].lon; geoAPI = true
                 cidadeTelaSeguinte = filtro[indexPath.row-1]
                 PesquisarCidade.endEditing(true)
+                nomeCidade = filtro[indexPath.row-1].nome!
                 performSegue(withIdentifier: "segueCidade", sender: self)
             }
         }else{
@@ -126,6 +127,7 @@ extension TableViewController{
             tLat = filtro[indexPath.row].lat; tLon = filtro[indexPath.row].lon; geoAPI = true
             cidadeTelaSeguinte = filtro[indexPath.row]
             PesquisarCidade.endEditing(true)
+            nomeCidade = filtro[indexPath.row].nome!
             performSegue(withIdentifier: "segueCidade", sender: self)
         }
     }

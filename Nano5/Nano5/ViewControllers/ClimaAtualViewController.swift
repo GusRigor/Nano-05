@@ -52,7 +52,10 @@ class ClimaAtualViewController: UIViewController {
     // MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        btnescalaTemp.isAccessibilityElement = true
+        btnescalaTemp.accessibilityLabel = defalts.string(forKey: "escala") == "°C" ? "Graus Celsius" : "Graus Fahrenheit"
+        print(btnescalaTemp.accessibilityLabel)
+        btnescalaTemp.accessibilityHint = "Toque duas vezes para mudar a escala de temperatura"
 
     }
     
@@ -205,6 +208,9 @@ class ClimaAtualViewController: UIViewController {
         }
         atualizarTemperaturas()
         btnescalaTemp.title = defalts.string(forKey: "escala")
+        btnescalaTemp.isAccessibilityElement = true
+        btnescalaTemp.accessibilityLabel = defalts.string(forKey: "escala") == "°C" ? "Graus Celsius" : "Graus Fahrenheit"
+        print(btnescalaTemp.accessibilityLabel ?? "Siri tá de troll")
     }
     
     // MARK: prepare

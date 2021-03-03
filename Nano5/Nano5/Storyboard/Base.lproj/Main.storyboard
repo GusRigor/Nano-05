@@ -284,6 +284,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6jk-26-eQl">
                                                 <rect key="frame" x="238" y="19" width="25" height="24"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                <accessibility key="accessibilityConfiguration" label="Mais informações"/>
                                                 <connections>
                                                     <segue destination="vxI-N3-ED6" kind="presentation" identifier="segueQualAr" modalPresentationStyle="formSheet" id="Vnw-dr-d49"/>
                                                 </connections>

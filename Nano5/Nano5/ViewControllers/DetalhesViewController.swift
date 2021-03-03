@@ -35,6 +35,8 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
     // MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        btnEscalaTemp.accessibilityLabel = defalts.string(forKey: "escala") == "°C" ? "Graus Celsius" : "Graus Fahrenheit"
+        btnEscalaTemp.accessibilityHint = "Toque duas vezes para mudar a escala de temperatura"
 
     }
 
@@ -76,6 +78,7 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
     // Atualiza as temperaturas dentro da collectionView e no UD
     func setTemperatura(){
         btnEscalaTemp.title = defalts.string(forKey: "escala")
+        btnEscalaTemp.accessibilityLabel = defalts.string(forKey: "escala") == "°C" ? "Graus Celsius" : "Graus Fahrenheit"
         collectPrevisao.reloadData()
     }
     
@@ -133,6 +136,38 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
         if ultimaForecast != nil {
             let configData = ultimaForecast!.daily![indexPath.row]!.dt
             cell.date.text = Conversores.UnixParaDate(UNIX: configData!, diaMes: true)
+            print(Int(cell.date.text!.split(separator: "-")[1])!)
+            let mes = Int(cell.date.text!.split(separator: "-")[1])!
+            switch mes {
+            case 1:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Janeiro"
+            case 2:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Fevereiro"
+            case 3:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Março"
+            case 4:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Abril"
+            case 5:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Maio"
+            case 6:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Junho"
+            case 7:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Julho"
+            case 8:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Agosto"
+            case 9:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Setembro"
+            case 10:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Outubro"
+            case 11:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Novembro"
+            case 12:
+                cell.date.accessibilityLabel = "\(cell.date.text!.split(separator: "-")[0]) de Dezembro"
+            default:
+                cell.date.accessibilityLabel = "erro :)"
+            }
+            
+            //cell.date.accessibilityLabel =
             
             let escalaTemp = defalts.string(forKey: "escala")
             var tempMin = ultimaForecast?.daily?[indexPath.row]?.temp?.min ?? 1234
@@ -146,7 +181,10 @@ class DetalhesViewController: UIViewController, UICollectionViewDataSource, UICo
                 tempMax = floor(Conversores.kelvinParaFahrenheit(TempKelvin: tempMax))
             }
             cell.lblMin.text = "Min: \(String(tempMin))°"
-            cell.lblMax.text = "Max: \(String(tempMax))°"
+            cell.lblMin.accessibilityLabel = "Mínima: \(String(tempMin))°"
+            cell.lblMax.text = "Máx: \(String(tempMax))°"
+            cell.lblMax.accessibilityLabel = "Máxima: \(String(tempMax))°"
+            
             AtualizarIcone(Cod: ultimaForecast?.daily?[indexPath.row]?.weather?.first??.id ?? 800, img: cell.imgIcon)
         }
         
